@@ -1,0 +1,65 @@
+import MobileDetect from 'mobile-detect';
+
+export default {
+    data() {
+        return {
+            isMobile:( (new MobileDetect(window.navigator.userAgent)).mobile() !== null ),             
+        }        
+    },    
+    methods:{
+        sessionEnd() {
+            window.location.href = "index.php?a=logout";
+        },
+        confirm(title,text,ok_cb,cancel_cb) {
+            this.$confirm(text, title, {
+                confirmButtonText: 'Evet',
+                cancelButtonText: 'Hayır',
+                type: 'warning'
+              }).then(() => {
+                if ( typeof ok_cb === "function" ) {
+                    ok_cb();
+                }
+              }).catch(() => {
+                if ( typeof cancel_cb === "function" ) {
+                    cancel_cb();
+                }          
+              });
+        },
+        link(path) {            
+            if (this.$router) {
+                if (this.$router.currentRoute.path != path ) {
+                    this.$router.push(path);
+                }
+            }            
+        },
+        WebMethod(method,data,onSuccess,onError) {
+            let self = this;
+            self.loading = true;
+            self.$http.post("index.php/"+method+"?a=ajax",(data ? data : null )).then( (response)=>{
+                self.sessionCountdown = self.sessionCountdownLimit;
+                self.loading = false;
+                if ( typeof response.data === "object" ) {
+                    if ( response.data.success ) {
+                        if ( typeof onSuccess === "function" ) {
+                            onSuccess( response.data );
+                        }
+                    } else {
+                        if ( response.data.text === "LOGOUT" ) {
+                            window.location.reload(true);
+                        } else if ( typeof onError === "function" ) {
+                            onError( "Application",response.data.text );
+                        }
+                    }
+                } else {
+                    onError( "Server",response.data );
+                }                
+            }).catch((error)=>{
+                self.sessionCountdown = self.sessionCountdownLimit;
+                self.loading = false;
+                if ( typeof onError === "function" ) {
+                    onError( "Network",error );
+                }
+            });
+        }
+    }
+}
