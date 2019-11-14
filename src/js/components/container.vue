@@ -2,18 +2,12 @@
   <div>
     <Menu></Menu>
     <div style="margin: 0.5em">
-      <div style="padding-top:1em; vertical-align: middle;">
-      <div style="display:inline-block; float:left; vertical-align:middle; display: flex; align-items:center;">
-        <img src="assets/img/logo.png" style="width:2.5em; heigth:2.5em;" >
-        <span style="font-size: 1.5em; padding-left:0.5em">
-          <b>{{ this.$router.currentRoute.meta.title }}</b>
-        </span>
+      <div style="display: flex; align-items:center">
+      <div style="display:inline-block;">
+        <img src="assets/img/logo.png" style="width:3em; heigth:3em;" >        
       </div>
-      <div style="display:inline-block; float:right; width:150px;">
-        <span>
-          <i class="el-icon-user"></i>
-          {{ ($store.state.user != null ? $store.state.user.name : "-" ) }}
-        </span>
+      <div style="display:inline-block; padding-left:1em; min-width:10em">
+        <i class="el-icon-user"></i>{{ ($store.state.user != null ? $store.state.user.name : "-" ) }}
         <el-progress
           :width="80"
           :percentage="sessionCountdownPercent"
@@ -22,6 +16,9 @@
           title="Session timeout"
         ></el-progress>
       </div>
+      <div style="display:inline-block; padding-left:1em;">
+        <b style="font-size: 1.5em;">{{ this.$router.currentRoute.meta.title }}</b>        
+      </div>      
     </div>
     <div style="clear:both"></div>
     <div style="padding-top:1em;">
