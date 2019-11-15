@@ -1,438 +1,192 @@
 <template>
-    <div id='cssmenu'>
-<ul>
-   <li><a @click="link('/')"><i class="el-icon-s-custom"></i>Üyeler</a></li>
-   <li><a @click="link('/yoklamalar')"><i class="el-icon-collection"></i>Yoklamalar</a></li>
-   <li><a @click="link('/malidurum')"><i class="el-icon-money"></i>Mali İşlemler</a></li>
-   <li><a><i class="el-icon-setting"></i>Ayarlar</a>
-    <ul>
-      <li><a @click="link('/sabitler')"><i class="el-icon-set-up"></i>Sabitler</a></li>
-      <li><a @click="link('/kullanicilar')"><i class="el-icon-user-solid"></i>Kullanıcılar</a></li>
-      <li><a @click="link('/pass')"><i class="el-icon-key"></i>Parola Değiştir</a></li>      
-    </ul>
-   </li>
-   <li><a @click="$parent.exit()"><i class="el-icon-close"></i>Çıkış</a></li>
-</ul>
-</div>
+<nav class="jmenu">
+      <label for="menu-btn" class="jm-menu-btn jm-icon-menu"></label>
+      <input type="checkbox" id="menu-btn" class="jm-menu-btn">
+      <ul class="jm-collapse">
+        <li><a @click="link('/')"><i class="el-icon-s-custom"></i>Üyeler</a></li>
+        <li><a @click="link('/yoklamalar')"><i class="el-icon-collection"></i>Yoklamalar</a></li>
+        <li><a @click="link('/malidurum')"><i class="el-icon-money"></i>Mali İşlemler</a></li>
+        <li class="jm-dropdown">
+          <a href="javascript:;"><b><i class="el-icon-setting"></i>Ayarlar</b></a>
+          <ul>
+            <li><a @click="link('/sabitler')"><i class="el-icon-set-up"></i>Sabitler</a></li>
+            <li><a @click="link('/kullanicilar')"><i class="el-icon-user-solid"></i>Kullanıcılar</a></li>
+            <li><a @click="link('/pass')"><i class="el-icon-key"></i>Parola Değiştir</a></li>
+          </ul>
+        </li>
+        <li><a @click="$parent.exit()"><i class="el-icon-close"></i>Çıkış</a></li>
+      </ul>
+    </nav>
 </template>
+
 <style>
-   /* @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);*/
-#cssmenu,
-#cssmenu ul,
-#cssmenu ul li,
-#cssmenu ul li a,
-#cssmenu #menu-button {
+/* JMenu 1.0 RC1 | MIT License | https://github.com/jamesjohnson280/JMenu */
+
+
+/* Menu bar and fonts */
+.jmenu {
+  background: #252525; /* Dark gray */
+  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, .5);
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+/* Menu Button */
+input.jm-menu-btn {
+  display: none; /* Hide the checkbox */
+}
+
+input[type='checkbox'].jm-menu-btn ~ .jm-collapse {
+  display: none; /* Hide menu on load */
+}
+
+input[type='checkbox']:checked.jm-menu-btn ~ .jm-collapse {
+  display: block; /* Open when menu button is clicked */
+}
+
+label.jm-menu-btn {
+  color: #959595; /* Light gray */
+  cursor: pointer;
+  display: block;
+  padding: 16px 32px;
+}
+
+label.jm-menu-btn:hover {
+  color: #fff;
+}
+
+.jm-collapse {
+  /* Add border between menu and menu button when it's open */
+  border-top: 1px #959595 solid; /* Light Gray */
+}
+
+
+/* Menu Items */
+.jmenu ul,
+.jmenu li {
+  list-style: none;
   margin: 0;
   padding: 0;
-  border: 0;
-  list-style: none;
-  line-height: 1;
-  display: block;
-  position: relative;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
-#cssmenu:after,
-#cssmenu > ul:after {
-  content: ".";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
-}
-#cssmenu #menu-button {
-  display: none;
-}
-#cssmenu {
-  font-family: Montserrat, sans-serif;
-  background:black;
-}
-#cssmenu > ul > li {
-  float: left;
-}
-#cssmenu.align-center > ul {
-  font-size: 0;
-  text-align: center;
-}
-#cssmenu.align-center > ul > li {
+
+/* Links */
+.jmenu a {
+  color: #959595; /* Light gray */
   display: inline-block;
-  float: none;
-}
-#cssmenu.align-center ul ul {
-  text-align: left;
-}
-#cssmenu.align-right > ul > li {
-  float: right;
-}
-#cssmenu > ul > li > a {
-  padding: 17px;
-  font-size: 12px;
-  letter-spacing: 1px;
+  padding: 16px 32px;
   text-decoration: none;
-  color: bisque;
-  font-weight: 700;
-  /*text-transform: uppercase;*/
 }
-#cssmenu > ul > li:hover > a {
-  color: #ffffff;
+
+.jmenu a:hover {
+  color: #fff; /* White */
 }
-#cssmenu > ul > li.has-sub > a {
-  padding-right: 30px;
+
+/* Submenu Items */
+.jmenu ul ul {
+  display: none; /* Hidden by default */
 }
-#cssmenu > ul > li.has-sub > a:after {
-  position: absolute;
-  top: 22px;
-  right: 11px;
-  width: 8px;
-  height: 2px;
+
+/* Dropdowns */
+
+.jm-dropdown:hover ul {
   display: block;
-  background: bisque;
-  content: '';
 }
-#cssmenu > ul > li.has-sub > a:before {
-  position: absolute;
-  top: 19px;
-  right: 14px;
-  display: block;
-  width: 2px;
-  height: 8px;
-  background: bisque;
-  content: '';
-  -webkit-transition: all .25s ease;
-  -moz-transition: all .25s ease;
-  -ms-transition: all .25s ease;
-  -o-transition: all .25s ease;
-  transition: all .25s ease;
+
+.jm-dropdown:hover a {
+  /* Make top-level menu item stay highlighted when hovering over children */
+  color: #fff; 
 }
-#cssmenu > ul > li.has-sub:hover > a:before {
-  top: 23px;
-  height: 0;
+
+.jm-dropdown ul {
+  background: #fff; /* White */
+  padding: 0;
 }
-#cssmenu ul ul {
-  position: absolute;
-  left: -9999px;
+
+.jm-dropdown ul a,
+.jm-dropdown:hover ul a {
+  color: #0072bc; /* Blue */
 }
-#cssmenu.align-right ul ul {
-  text-align: right;
+
+.jm-dropdown ul a:hover,
+.jm-dropdown:hover ul a:hover {
+  color: #000; /* Black*/
 }
-#cssmenu ul ul li {
-  height: 0;
-  -webkit-transition: all .25s ease;
-  -moz-transition: all .25s ease;
-  -ms-transition: all .25s ease;
-  -o-transition: all .25s ease;
-  transition: all .25s ease;
+
+/* Tertiary+ Menu Items */
+.jm-dropdown ul ul {
+  border-bottom: 1px #ccc solid; /* Light gray */
+  border-top: 1px #ccc solid;
+  box-shadow: none;
+  margin-bottom: 16px;
+  max-width: 100%;
+  position: relative;
 }
-#cssmenu li:hover > ul {
-  left: auto;
-}
-#cssmenu.align-right li:hover > ul {
-  left: auto;
-  right: 0;
-}
-#cssmenu li:hover > ul > li {
-  height: 35px;
-}
-#cssmenu ul ul ul {
-  margin-left: 100%;
-  top: 0;
-}
-#cssmenu.align-right ul ul ul {
-  margin-left: 0;
-  margin-right: 100%;
-}
-#cssmenu ul ul li a {
-  border-bottom: 1px soli dimgrey;
-  padding: 11px 15px;
-  width: 170px;
-  font-size: 12px;
-  text-decoration: none;
-  color: bisque;
-  font-weight: 400;
-  background:black;
-  z-index: 200;
-}
-#cssmenu ul ul li:last-child > a,
-#cssmenu ul ul li.last-item > a {
-  border-bottom: 0;
-}
-#cssmenu ul ul li:hover > a,
-#cssmenu ul ul li a:hover {
-  color: #ffffff;
-}
-#cssmenu ul ul li.has-sub > a:after {
-  position: absolute;
-  top: 16px;
-  right: 11px;
-  width: 8px;
-  height: 2px;
-  display: block;
-  background: bisque;
-  content: '';
-}
-#cssmenu.align-right ul ul li.has-sub > a:after {
-  right: auto;
-  left: 11px;
-}
-#cssmenu ul ul li.has-sub > a:before {
-  position: absolute;
-  top: 13px;
-  right: 14px;
-  display: block;
-  width: 2px;
-  height: 8px;
-  background: bisque;
-  content: '';
-  -webkit-transition: all .25s ease;
-  -moz-transition: all .25s ease;
-  -ms-transition: all .25s ease;
-  -o-transition: all .25s ease;
-  transition: all .25s ease;
-}
-#cssmenu.align-right ul ul li.has-sub > a:before {
-  right: auto;
-  left: 14px;
-}
-#cssmenu ul ul > li.has-sub:hover > a:before {
-  top: 17px;
-  height: 0;
-}
-@media all and (max-width: 768px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1024px), only screen and (min-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (min-resolution: 192dpi) and (max-width: 1024px), only screen and (min-resolution: 2dppx) and (max-width: 1024px) {
-  #cssmenu {
-    width: 100%;
-  }
-  #cssmenu ul {
-    width: 100%;
-    display: none;
-  }
-  #cssmenu.align-center > ul {
-    text-align: left;
-  }
-  #cssmenu ul li {
-    width: 100%;
-    border-top: 1px solid dimgrey;
-  }
-  #cssmenu ul ul li,
-  #cssmenu li:hover > ul > li {
-    height: auto;
-  }
-  #cssmenu ul li a,
-  #cssmenu ul ul li a {
-    width: 100%;
-    border-bottom: 0;
-  }
-  #cssmenu > ul > li {
-    float: none;
-  }
-  #cssmenu ul ul li a {
-    padding-left: 25px;
-  }
-  #cssmenu ul ul ul li a {
-    padding-left: 35px;
-  }
-  #cssmenu ul ul li a {
-    color: bisque;
-    background: none;
-  }
-  #cssmenu ul ul li:hover > a,
-  #cssmenu ul ul li.active > a {
-    color: #ffffff;
-  }
-  #cssmenu ul ul,
-  #cssmenu ul ul ul,
-  #cssmenu.align-right ul ul {
-    position: relative;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    text-align: left;
-  }
-  #cssmenu > ul > li.has-sub > a:after,
-  #cssmenu > ul > li.has-sub > a:before,
-  #cssmenu ul ul > li.has-sub > a:after,
-  #cssmenu ul ul > li.has-sub > a:before {
-    display: none;
-  }
-  #cssmenu #menu-button {
-    display: block;
-    padding: 17px;
-    color: bisque;
-    cursor: pointer;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-  #cssmenu #menu-button:after {
-    position: absolute;
-    top: 22px;
-    right: 17px;
-    display: block;
-    height: 4px;
-    width: 20px;
-    border-top: 2px solid bisque;
-    border-bottom: 2px solid bisque;
-    content: '';
-  }
-  #cssmenu #menu-button:before {
-    position: absolute;
-    top: 16px;
-    right: 17px;
-    display: block;
-    height: 2px;
-    width: 20px;
-    background: bisque;
-    content: '';
-  }
-  #cssmenu #menu-button.menu-opened:after {
-    top: 23px;
-    border: 0;
-    height: 2px;
-    width: 15px;
-    background: #ffffff;
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
+
+/* Icons */
+.jm-icon-dropdown {
+    border: solid #959595; /* Light gray */
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    margin: 0 0 3px 8px;
+    padding: 3px;
     transform: rotate(45deg);
-  }
-  #cssmenu #menu-button.menu-opened:before {
-    top: 23px;
-    background: #ffffff;
-    width: 15px;
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-  }
-  #cssmenu .submenu-button {
-    position: absolute;
-    z-index: 99;
-    right: 0;
-    top: 0;
-    display: block;
-    border-left: 0px solid dimgrey;
-    height: 46px;
-    width: 46px;
-    cursor: pointer;
-  }
-  #cssmenu .submenu-button.submenu-opened {
-    background:black;
-  }
-  #cssmenu ul ul .submenu-button {
-    height: 34px;
-    width: 34px;
-  }
-  #cssmenu .submenu-button:after {
-    position: absolute;
-    top: 22px;
-    right: 19px;
-    width: 8px;
-    height: 2px;
-    display: block;
-    background: bisque;
-    content: '';
-  }
-  #cssmenu ul ul .submenu-button:after {
-    top: 15px;
-    right: 13px;
-  }
-  #cssmenu .submenu-button.submenu-opened:after {
-    background: #ffffff;
-  }
-  #cssmenu .submenu-button:before {
-    position: absolute;
-    top: 19px;
-    right: 22px;
-    display: block;
-    width: 2px;
-    height: 8px;
-    background: bisque;
-    content: '';
-  }
-  #cssmenu ul ul .submenu-button:before {
-    top: 12px;
-    right: 16px;
-  }
-  #cssmenu .submenu-button.submenu-opened:before {
-    display: none;
-  }
+} 
+
+li:hover .jm-icon-dropdown {
+    border-color: #fff; /* White */
+} 
+
+.jm-icon-menu::before {
+  content: '\2630';
 }
+
+@media (min-width: 768px) {
+  
+  /* Menu items */
+  .jmenu li {
+    display: inline-block;
+  }
+  
+  .jmenu a {
+    padding: 16px;
+  }
+  
+  /* Dropdowns */
+  .jm-dropdown {
+    position: relative;
+  }
+  
+  .jm-dropdown li a {
+    display: block;
+    padding: 8px 16px;
+    white-space: nowrap;
+  }
+  
+  .jm-dropdown ul {
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, .5);
+    padding: 8px 0;
+    position: absolute;
+    min-width: 100%;
+    z-index: 200;
+  }
+  
+  /* Menu Button */
+  input.jm-menu-btn,
+  label.jm-menu-btn {
+    display: none; /* Hide menu button */
+  }
+  
+  input[type='checkbox'].jm-menu-btn ~ .jm-collapse,
+  .jm-collapse {
+    display: block; /* Show menu */
+  }
+
+}
+
 </style>
+
 <script>
-import $ from "jquery"
-
-(function($) {
-
-  $.fn.menumaker = function(options) {
-      
-      var cssmenu = $(this), settings = $.extend({
-        title: "Menu",
-        format: "dropdown",
-        sticky: false
-      }, options);
-
-      return this.each(function() {
-        cssmenu.prepend('<div id="menu-button">' + settings.title + '</div>');
-        $(this).find("#menu-button").on('click', function(){
-          $(this).toggleClass('menu-opened');
-          var mainmenu = $(this).next('ul');
-          if (mainmenu.hasClass('open')) { 
-            mainmenu.hide().removeClass('open');
-          }
-          else {
-            mainmenu.show().addClass('open');
-            if (settings.format === "dropdown") {
-              mainmenu.find('ul').show();
-            }
-          }
-        });
-
-        cssmenu.find('li ul').parent().addClass('has-sub');
-
-        var multiTg = function() {
-          cssmenu.find(".has-sub").prepend('<span class="submenu-button"></span>');
-          cssmenu.find('.submenu-button').on('click', function() {
-            $(this).toggleClass('submenu-opened');
-            if ($(this).siblings('ul').hasClass('open')) {
-              $(this).siblings('ul').removeClass('open').hide();
-            }
-            else {
-              $(this).siblings('ul').addClass('open').show();
-            }
-          });
-        };
-
-        if (settings.format === 'multitoggle') multiTg();
-        else cssmenu.addClass('dropdown');
-
-        if (settings.sticky === true) cssmenu.css('position', 'fixed');
-
-        var resizeFix = function() {
-          if ($( window ).width() > 768) {
-            cssmenu.find('ul').show();
-          }
-
-          if ($(window).width() <= 768) {
-            cssmenu.find('ul').hide().removeClass('open');
-          }
-        };
-        resizeFix();
-        return $(window).on('resize', resizeFix);
-
-      });
-  };
-})($);
-
-export default {
-    mounted() {
-        
-$("#cssmenu").menumaker({
-   title: "Menü",
-   format: "multitoggle"
-});
-    }
-}
+  export default {
+    
+  }
 </script>
