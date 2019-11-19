@@ -6,7 +6,7 @@
         :model="f_login"
         :rules="r_login"
         ref="login"
-        v-show="section == 'login'"
+        v-show="section == 'login'||section == 'form_authenticate'"
         action="index.php?a=form_authenticate"
         method="POST"
       >
@@ -162,6 +162,8 @@ export default {
     } else {
       this.$message.success(window.RouterMessage.text);
     }
+
+    console.log(this.section);
     
   },
   methods: {

@@ -5,12 +5,13 @@ require_once __DIR__ . "/../lib/SQLite3Ex.php";
 class Data {
     private $conn;
     public static function link():SQLite3Ex {
-        return new SQLite3Ex( __DIR__ . "/dojo.db" );
+        $conn = new SQLite3Ex( __DIR__ . "/dojo.db" );
+        return $conn;
     }
 
     public function __construct()
     {
-        $this->conn = $this->conn;    
+        $this->conn = self::link();
     }
 
     public function __destruct()
@@ -33,21 +34,31 @@ class Data {
     }
 
     public function yoklama($tarih,$uye_ids,&$incount) {
-        //var_dump($tarih); var_dump($uye_ids);
-        $stmt = $this->conn->prepare("DELETE FROM yoklama WHERE tarih =:tarih");
-        $stmt->bindParam("tarih",$tarih, SQLITE3_TEXT);
-        $stmt->execute();
+
+        $this->conn("BEGIN");        
+        try {
+            
         
-        
-        //var_dump($uye_ids);
-        for($i=0; $i<count($uye_ids); $i++) {
-            $stmt = $this->conn->prepare("INSERT INTO yoklama (uye_id,tarih) VALUES (:u,:t)");
-            $stmt->bindParam("t",$tarih, SQLITE3_TEXT);
-            $stmt->bindParam("u",$uye_ids[$i], SQLITE3_INTEGER);
+            $stmt = $this->conn->prepare("DELETE FROM yoklama WHERE tarih =:tarih");
+            $stmt->bindParam("tarih",$tarih, SQLITE3_TEXT);
             $stmt->execute();
+        
+        
+            //var_dump($uye_ids);
+            for($i=0; $i<count($uye_ids); $i++) {
+                $stmt = $this->conn->prepare("INSERT INTO yoklama (uye_id,tarih) VALUES (:u,:t)");
+                $stmt->bindParam("t",$tarih, SQLITE3_TEXT);
+                $stmt->bindParam("u",$uye_ids[$i], SQLITE3_INTEGER);
+                $stmt->execute();
+            }
+
+            $incount = $i;
+        } catch ( Exception $ex ) {
+            $this->exec("ROLLBACK");
+            throw $ex;
         }
 
-        $incount = $i;
+        $this->exec("COMMIT");
     }
 
     public function yoklamalar($tarih_s,$tarih_e,$s,$l,&$maxrow) {
@@ -149,12 +160,35 @@ class Data {
         return $this->conn->table("kullanici", $row);
     }
 
+    public function password($kullanici,$eski,$yeni) {
+        $stmt = $this->conn->prepare("UPDATE kullanici SET parola = :y WHERE kullanici = :k AND parola = :e ");
+        $e = hash('ripemd160', $eski);
+        $y = hash('ripemd160', $yeni);
+        $k = $kullanici;
+        $stmt->bindParam("y",$y, SQLITE3_TEXT);
+        $stmt->bindParam("e",$e, SQLITE3_TEXT);
+        $stmt->bindParam("k",$k, SQLITE3_TEXT);
+        $stmt->execute();
+    }
+
+    public function yetkilendir($kullanici,$pass) {
+        $stmt = $this->conn->prepare("SELECT yetki FROM kullanici WHERE LOWER(kullanici) = LOWER( :kullanici ) AND parola = :parola");
+        $stmt->bindValue("kullanici", $kullanici, SQLITE3_TEXT);
+        $stmt->bindValue("parola", hash('ripemd160', $pass), SQLITE3_TEXT);
+        $arr = $this->conn->resultToArray( $stmt->execute() );
+        //print_r($arr); die();
+        if (is_array($arr) && count($arr)==1 ) {
+            return $arr[0]["yetki"];
+        } else {
+            return false;
+        }
+    }
+
     public function kullanici_sil($kullanici_id) {        
         return $this->conn->table("kullanici", $kullanici_id);
     }
 
     public function odeme($uye_id,$tarih,$yil,$ay,$tutar,$odeme_tur_id,$aciklama,$odeme_id = false) {
-        $this->testAuth(["ADMIN","USER"]);
         $row = [
             "uye_id" => $uye_id,
             "tarih" => $tarih,
@@ -328,6 +362,29 @@ FROM seviye GROUP BY uye_id HAVING tarih = MAX(tarih) ) s ON s.uye_id = u.uye_id
         $stmt->bindParam("l",$l, SQLITE3_INTEGER);
         
         return $this->conn->resultToArray($stmt->execute());
+    }
+
+    public function seviye($uye_id,$tarih,$tanim,$detaylar,$ekc_no,$seviye_id = false) {
+        $row = [
+            "uye_id" => $uye_id,
+            "tarih" => $tarih,
+            "tanim" => $tanim,
+            "detaylar" =>$detaylar,
+            "ekc_no" => $ekc_no
+        ];
+        if ($seviye_id!=false) $row["seviye_id"] = $seviye_id;
+        return $this->conn->table("seviye", $row);
+    }
+
+    public function uyenin_sinavlari($uye_id) {
+        $sql = "SELECT s.seviye_id,s.tarih,s.tanim,s.detaylar,s.ekc_no FROM seviye s WHERE s.uye_id = :uid ORDER BY s.tarih DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam("uid", $uye_id, SQLITE3_INTEGER);
+        return $this->conn->resultToArray($stmt->execute());
+    }
+
+    public function sinav_sil($seviye_id) {        
+        return $this->conn->table("seviye", $seviye_id);
     }
 
 }

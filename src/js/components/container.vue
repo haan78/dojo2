@@ -1,5 +1,6 @@
 <template>
   <div>
+    <link type="text/css" rel="stylesheet" href="assets/default.css" />
     <Menu></Menu>
     <div style="margin: 0.5em">
       <div style="display: flex; align-items:center">

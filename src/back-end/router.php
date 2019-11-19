@@ -28,7 +28,7 @@ class router extends ARouter
             header("Location: index.php");
             return true;
         } else {            
-            $this->html("js/login.js","login",["RouterMessage"=>["section"=>"login","class"=>"danger","text"=>"Username or password is wrong"]]);
+            $this->html("js/login.js","app",["RouterMessage"=>["section"=>"login","class"=>"danger","text"=>"Username or password is wrong"]]);
             return false;
         }
     }
