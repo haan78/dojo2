@@ -855,3 +855,10 @@
 {"timestamp":"2019-11-19T14:31:26+03:00","router_error":null,"details":{"kullanici":"admin","yetki":"ADMIN"},"duration":0.01}
 {"timestamp":"2019-11-19T14:31:29+03:00","router_error":null,"details":{"kullanici":"admin","yetki":"ADMIN"},"duration":0.01266}
 {"timestamp":"2019-11-19T14:31:50+03:00","router_error":null,"details":true,"duration":0.00934}
+{"timestamp":"2019-11-19T14:32:34+03:00","router_error":null,"details":null,"duration":0.00036}
+{"timestamp":"2019-11-19T14:32:34+03:00","router_error":null,"details":null,"duration":0.01017}
+{"timestamp":"2019-11-19T14:32:41+03:00","router_error":null,"details":true,"duration":0.00226}
+{"timestamp":"2019-11-19T14:32:41+03:00","router_error":null,"details":{"kullanici":"admin","yetki":"ADMIN"},"duration":0.00993}
+{"timestamp":"2019-11-19T14:33:13+03:00","router_error":null,"details":{"kullanici":"admin","yetki":"ADMIN"},"duration":0.01016}
+{"timestamp":"2019-11-19T14:34:38+03:00","router_error":null,"details":true,"duration":0.0095}
+{"timestamp":"2019-11-19T14:39:01+03:00","router_error":null,"details":true,"duration":0.01117}

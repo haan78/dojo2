@@ -108,7 +108,7 @@ export default {
     return {
       loading: false,
       start: 0,
-      limit: 12,
+      limit: 120,
       search: null,
       siralama: "AD",
       aktif: true,
