@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <el-form :model="form" :rules="rules" ref="FORM">
       <el-form-item label="Old Password" prop="pass1">
         <el-input

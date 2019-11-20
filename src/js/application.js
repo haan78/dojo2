@@ -2,7 +2,7 @@ import Vue from 'vue'
 import ElementUI from 'element-ui';
 import locale from "element-ui/lib/locale/lang/tr-TR"
 import MyDateVue from './lib/MyDateVue'
-import IsString from './lib/IsString';
+import IsStringVue from './lib/IsStringVue';
 import Url from './lib/UrlVue'
 import AxiosHttp from "./lib/AxiosHttp"
 import DefaultMixin from "./lib/DefaultMixin"
@@ -15,7 +15,7 @@ import routes from "./plugins/routes"
 
 Vue.use(ElementUI,{ locale });
 Vue.use(MyDateVue);
-Vue.use(IsString);
+Vue.use(IsStringVue);
 Vue.use(Url);
 Vue.use(AxiosHttp);
 Vue.mixin(DefaultMixin);

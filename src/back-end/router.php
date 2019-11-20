@@ -83,6 +83,11 @@ class router extends ARouter
         }
     }
 
+    public function photo() {
+        require_once __DIR__ . "/photo.php";
+        Photo::save();
+    }
+
     public function ajax()
     {
         $data = null;

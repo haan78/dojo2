@@ -19,7 +19,14 @@ class Data {
         $this->conn->close();
     }
 
-    public function  uye($uye,$uye_tur,$dogum_tarihi,$uyelik_tarihi,$aktif,$cinsiyet,$eposta,$uye_id = false) {
+    public function photo_save($uye_id,$photo) {        
+        $stmt = $this->conn->prepare("UPDATE uye SET photo = :p WHERE uye_id = :id");
+        $stmt->bindParam("p", $photo, SQLITE3_TEXT);
+        $stmt->bindParam("id", $uye_id, SQLITE3_INTEGER);
+        $stmt->execute();
+    }
+
+    public function uye($uye,$uye_tur,$dogum_tarihi,$uyelik_tarihi,$aktif,$cinsiyet,$eposta,$ekf_no,$uye_id = 0) {
         $row = [
             "uye" => $uye,
             "uye_tur" => $uye_tur,
@@ -27,10 +34,23 @@ class Data {
             "uyelik_tarihi" => $uyelik_tarihi,
             "aktif" => $aktif,
             "cinsiyet" => $cinsiyet,
-            "eposta" => $eposta
+            "eposta" => $eposta,
+            "ekf_no" => $ekf_no
         ];
-        if ($uye_id!=false) $row["uye_id"] = $uye_id;
+        if ( intval($uye_id)!=0) $row["uye_id"] = $uye_id;
         return $this->conn->table("uye", $row);
+    }
+
+    public function uye_detay($uye_id) {
+        $sql = "SELECT u.uye_id,u.uye,u.uye_tur,u.uyelik_tarihi,u.aktif,u.cinsiyet,u.eposta,u.dogum_tarihi,u.photo,u.ekf_no FROM uye u WHERE u.uye_id = :uid";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam("uid",$uye_id, SQLITE3_INTEGER);
+        $arr =  $this->conn->resultToArray($stmt->execute());
+        if ( isset($arr[0]) ) {
+            return $arr[0];
+        } else {
+            throw new Exception("Uye bulunamadi");
+        }
     }
 
     public function yoklama($tarih,$uye_ids,&$incount) {

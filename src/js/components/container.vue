@@ -8,7 +8,7 @@
         <img src="assets/img/logo.png" style="width:3em; heigth:3em;" >        
       </div>
       <div style="display:inline-block; padding-left:1em; min-width:10em">
-        <i class="el-icon-user"></i>{{ ($store.state.user != null ? $store.state.user.name : "-" ) }}
+        <i class="el-icon-user"></i>{{ ($store.state.user != null ? $store.state.user.kullanici : "-" ) }}
         <el-progress
           :width="80"
           :percentage="sessionCountdownPercent"
@@ -22,7 +22,7 @@
       </div>      
     </div>
     <div style="clear:both"></div>
-    <div style="padding-top:1em;">
+    <div class="template">
       <router-view />
     </div>
     </div>

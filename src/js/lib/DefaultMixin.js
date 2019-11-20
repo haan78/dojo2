@@ -32,12 +32,18 @@ export default {
                 }
             }            
         },
+        setLoading(value) {
+            let self = this;
+            if ( typeof self.$parent.loading === "boolean" ) {
+                self.$parent.loading = value;
+            }
+        },
         WebMethod(method,data,onSuccess,onError) {
             let self = this;
-            self.loading = true;
+            self.setLoading(true);
             self.$http.post("index.php/"+method+"?a=ajax",(data ? data : null )).then( (response)=>{
-                self.sessionCountdown = self.sessionCountdownLimit;
-                self.loading = false;
+                self.$parent.sessionCountdown = self.$parent.sessionCountdownLimit;
+                self.setLoading(false);
                 if ( typeof response.data === "object" ) {
                     if ( response.data.success ) {
                         if ( typeof onSuccess === "function" ) {
@@ -54,8 +60,8 @@ export default {
                     onError( "Server",response.data );
                 }                
             }).catch((error)=>{
-                self.sessionCountdown = self.sessionCountdownLimit;
-                self.loading = false;
+                self.$parent.sessionCountdown = self.$parent.sessionCountdownLimit;
+                self.setLoading(false);
                 if ( typeof onError === "function" ) {
                     onError( "Network",error );
                 }
