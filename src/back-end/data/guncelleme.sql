@@ -12,6 +12,6 @@ CREATE TABLE `seviye` (
 );
 
 insert into seviye ( seviye_id,uye_id,tarih,tanim,detaylar )
-	select s_.seviye_id,s_.uye_id,s_.tarih,s_.tarih,s_.detaylar from seviye_ s_;
+	select s_.seviye_id,s_.uye_id,s_.tarih,s_.tanim,s_.detaylar from seviye_ s_;
 
 DROP TABLE seviye_;

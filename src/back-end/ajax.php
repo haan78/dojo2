@@ -18,8 +18,29 @@ class ajax extends AAjax {
         return $data->uye_detay($uye_id);
     }
 
-    public function uye($uye,$uye_tur,$dogum_tarihi,$uyelik_tarihi,$aktif,$cinsiyet,$eposta,$ekf_no,$uye_id = 0) {
+    public function uye($uye,$uye_tur,$dogum_tarihi,$uyelik_tarihi,$aktif,$cinsiyet,$eposta,$ekf_no,$uye_id = 0) { //Admin
         $data = new Data();
         return $data->uye($uye,$uye_tur,$dogum_tarihi,$uyelik_tarihi,$aktif,$cinsiyet,$eposta,$ekf_no,$uye_id);
     }
+
+    public function odeme_turleri() { //Admin
+        $data = new Data();
+        return $data->odeme_turleri();    
+    }
+
+    public function odeme_tur($odeme_tur,$tutar,$odeme_tur_id = false) { //Admin
+        $data = new Data();
+        return $data->odeme_tur($odeme_tur,$tutar,$odeme_tur_id);
+    }
+
+    public function aidat_eksigi($uye_id) {
+        $data = new Data();
+        return $data->aidat_eksigi($uye_id);
+    }
+
+    public function uye_odemeleri($uye_id,$odeme_tur_id,$s,$l,&$total,&$maxrow) {
+        $data = new Data();
+        return $data->uye_odemeleri($uye_id,$odeme_tur_id,$s,$l,$total,$maxrow);
+    }
+
 }

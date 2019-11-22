@@ -1,31 +1,31 @@
 <template>
   <div class="container">
     <el-form :model="form" :rules="rules" ref="FORM">
-      <el-form-item label="Old Password" prop="pass1">
+      <el-form-item label="Eski Parola" prop="pass1">
         <el-input
           prefix-icon="el-icon-key"
           v-model="form.pass1"
-          placeholder="Old Password"
+          placeholder="Eski Parola"
           show-password
         ></el-input>
       </el-form-item>
-      <el-form-item label="New Password" prop="pass2">
+      <el-form-item label="Yeni Parola" prop="pass2">
         <el-input
           prefix-icon="el-icon-key"
           v-model="form.pass2"
-          placeholder="New Password"
+          placeholder="Yeni Parola"
           show-password
         ></el-input>
       </el-form-item>
-      <el-form-item label="New Password Repeat" prop="pass3">
+      <el-form-item label="Tekrar Yeni Parola" prop="pass3">
         <el-input
           prefix-icon="el-icon-key"
           v-model="form.pass3"
-          placeholder="New Password Repeat"
+          placeholder="Tekrar Yeni Parola"
           show-password
         ></el-input>
       </el-form-item>
-      <el-button type="primary" style="width:100%" @click="save()">Save</el-button>
+      <el-button type="primary" style="width:100%" @click="save()">Kaydet</el-button>
     </el-form>
   </div>
 </template>
@@ -35,7 +35,7 @@ export default {
       let self = this;
     var p3v = (rule, value, callback) => {
             if (value !== self.form.pass2) {
-              callback(new Error("New password and its repeat don't match."));
+              callback(new Error("Yeni parola ile tekrarı uyuşmuyor"));
             } else {
               callback();
             }
@@ -51,7 +51,7 @@ export default {
           trigger: "blur",
           validator: (rule, value, callback) => {
             if (value === null || value === "") {
-              callback(new Error("Please fill old password"));
+              callback(new Error("Lütfen eski parolayı girin"));
             } else {
               callback();
             }
@@ -68,7 +68,7 @@ export default {
             ) {
               callback(
                 new Error(
-                  "The new password can have a minimum of five and a maximum of eight characters"
+                  "Yeni parola en az beş en çok sekiz karakterden oluşmalı"
                 )
               );
             } else {
@@ -96,7 +96,7 @@ export default {
               self.form.pass1 = null;
               self.form.pass2 = null;
               self.form.pass3 = null;
-              self.$message("Parola başarıyla değiştirildi");
+              self.$message.success("Parola başarıyla değiştirildi");
             },
             (type, detail) => {
               self.form.pass1 = null;

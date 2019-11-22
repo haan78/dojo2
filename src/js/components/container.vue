@@ -52,7 +52,7 @@ export default {
       menu_class: "topnav",
       isMenuActive: false,
       sessionInterval: null,
-      sessionCountdownLimit: 450,
+      sessionCountdownLimit: 600,
       sessionCountdown: null,
       sessionCountdownPercent: 100,
       sessionCountdownColors: [
