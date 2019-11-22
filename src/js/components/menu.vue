@@ -6,14 +6,14 @@
         <li><a @click="link('/')"><i class="el-icon-s-custom"></i>Üyeler</a></li>
         <li><a @click="link('/yoklamalar')"><i class="el-icon-collection"></i>Yoklamalar</a></li>
         <li><a @click="link('/malidurum')"><i class="el-icon-money"></i>Mali İşlemler</a></li>
-        <li class="jm-dropdown">
-          <a href="javascript:;"><b><i class="el-icon-setting"></i>Ayarlar</b></a>
+        <li class="jm-dropdown" v-if="$store.state.user.yetki === 'ADMIN'">
+          <a href="javascript:;"><b><i class="el-icon-setting"></i>Yönetici</b></a>
           <ul>
             <li><a @click="link('/sabitler')"><i class="el-icon-set-up"></i>Sabitler</a></li>
-            <li><a @click="link('/kullanicilar')"><i class="el-icon-user-solid"></i>Kullanıcılar</a></li>
-            <li><a @click="link('/pass')"><i class="el-icon-key"></i>Parola Değiştir</a></li>
+            <li><a @click="link('/kullanicilar')"><i class="el-icon-user-solid"></i>Kullanıcılar</a></li>            
           </ul>
         </li>
+        <li><a @click="link('/pass')"><i class="el-icon-key"></i>Parola Değiştir</a></li>
         <li><a @click="$parent.exit()"><i class="el-icon-close"></i>Çıkış</a></li>
       </ul>
     </nav>
@@ -187,6 +187,8 @@ li:hover .jm-icon-dropdown {
 
 <script>
   export default {
-    
+    created() {
+      
+    }
   }
 </script>

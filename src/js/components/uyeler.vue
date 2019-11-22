@@ -33,11 +33,11 @@
         <div v-for="(item,index) in list" :key="index" class="gitem">
             <table  >
                     <tr>
-                        <td rowspan="5" ><img :src="( item.photo !== null ? 'assets/photos/'+item.photo : 'assets/img/kendoka.jpg' ) " @click="link('/photo/'+item.uye_id+'/'+item.photo)" ></td>
+                        <td rowspan="5" ><img :src="( item.photo !== null ? 'assets/photos/'+item.photo : 'assets/img/kendoka.jpg' ) " @click="link('/photo/'+item.uye_id+'/'+item.photo+'/'+item.uye)" ></td>
                         <td><el-button type="text" icon="el-icon-user-solid" @click="link('/uyekayit/'+item.uye_id)" >{{ item.uye }}</el-button></td>
                     </tr>
-                    <tr><td><el-button :type="getButtonType('eksik',item.aidat_eksigi)" icon="el-icon-money" @click="link('/tahsilat/'+item.uye_id)" >Aidatlar{{ item.aidat_eksigi > 0 ? ' ('+item.aidat_eksigi+')' : '' }}</el-button></td></tr>
-                    <tr><td><el-button type="" icon="el-icon-sort-up" >Seviye( {{item.seviye}} )</el-button></td></tr>
+                    <tr><td><el-button :type="getButtonType('eksik',item.aidat_eksigi)" icon="el-icon-money" @click="link('/tahsilat/'+item.uye_id+'/'+item.uye)" >Aidatlar{{ item.aidat_eksigi > 0 ? ' ('+item.aidat_eksigi+')' : '' }}</el-button></td></tr>
+                    <tr><td><el-button type="" icon="el-icon-sort-up" @click="link('/uyeseviye/'+item.uye_id+'/'+item.uye)" >Seviye( {{item.seviye}} )</el-button></td></tr>
                     <tr><td><el-button :type="getButtonType('keiko',item.son_geldigi_keiko)" icon="el-icon-finished">Keikolar( {{ $date.toTurkish(item.son_geldigi_keiko) }} )</el-button></td></tr>
                     <tr><td><el-button type="info" icon="el-icon-s-data">İstatistikler</el-button></td></tr>                    
                 </table>
@@ -91,15 +91,21 @@
       }
     }
 
-    @media (min-width: 1100px) {
+    @media (min-width: 900px) {
       .card {        
         grid-template-columns: auto auto auto;
       }
     }
 
-    @media (min-width: 1500px) {
+    @media (min-width: 1150px) {
       .card {        
         grid-template-columns: auto auto auto auto;
+      }
+    }
+
+    @media (min-width: 1350px) {
+      .card {        
+        grid-template-columns: auto auto auto auto auto;
       }
     }
 

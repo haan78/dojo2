@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <h2>{{ uye }}</h2>
         <el-upload :action="'index.php?a=photo&uye_id='+uye_id" :limit="3" :file-list="fileList" :on-success="sonuc" list-type="picture">
           
           <el-image  v-if="photo_!== null" fit="fill" :src="'assets/photos/'+this.photo_" ></el-image>
@@ -15,7 +16,7 @@
 
 <script>
 export default {
-    props:[ "uye_id","photo" ],
+    props:[ "uye_id","photo","uye" ],
     data() {
         return {
             photo_:null,

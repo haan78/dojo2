@@ -218,7 +218,8 @@ class Data {
             "odeme_tur_id" => $odeme_tur_id,
             "aciklama" => ($aciklama == "" ? null : $aciklama )
         ];
-        if ($odeme_id!=false) $row["odeme_id"] = $odeme_id;
+        //var_dump($odeme_id);
+        if ($odeme_id!=false ) $row["odeme_id"] = $odeme_id;
         //var_dump($row);
         return $this->conn->table("odeme", $row);
     }
@@ -397,7 +398,7 @@ FROM seviye GROUP BY uye_id HAVING tarih = MAX(tarih) ) s ON s.uye_id = u.uye_id
     }
 
     public function uyenin_sinavlari($uye_id) {
-        $sql = "SELECT s.seviye_id,s.tarih,s.tanim,s.detaylar,s.ekc_no FROM seviye s WHERE s.uye_id = :uid ORDER BY s.tarih DESC";
+        $sql = "SELECT s.seviye_id,s.tarih,s.tanim,s.detaylar FROM seviye s WHERE s.uye_id = :uid ORDER BY s.tarih DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam("uid", $uye_id, SQLITE3_INTEGER);
         return $this->conn->resultToArray($stmt->execute());

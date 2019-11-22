@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="margin: 0.5em">
     <link type="text/css" rel="stylesheet" href="assets/default.css" />
     <Menu></Menu>
-    <div style="margin: 0.5em">
+    <div style="padding-top:0.2em">
       <div style="display: flex; align-items:center">
       <div style="display:inline-block;">
         <img src="assets/img/logo.png" style="width:3em; heigth:3em;" >        

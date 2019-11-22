@@ -43,4 +43,19 @@ class ajax extends AAjax {
         return $data->uye_odemeleri($uye_id,$odeme_tur_id,$s,$l,$total,$maxrow);
     }
 
+    public function  odeme($uye_id,$tarih,$yil,$ay,$tutar,$odeme_tur_id,$aciklama,$odeme_id = false) { //USER
+        $data = new Data();
+        return $data->odeme($uye_id,$tarih,$yil,$ay,$tutar,$odeme_tur_id,$aciklama,$odeme_id);
+    }
+
+    public function odeme_sil($odeme_id) { //USER
+        $data = new Data();
+        return $data->odeme_sil($odeme_id);
+    }
+
+    public function uyenin_sinavlari($uye_id) {
+        $data = new Data();
+        return $data->uyenin_sinavlari($uye_id);
+    }
+
 }
