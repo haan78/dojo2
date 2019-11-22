@@ -101,7 +101,7 @@ export default {
       return Math.ceil(this.od_maxrow / this.od_limit);
     }
   },
-  props: ["uye_id"],
+  props: ["uye_id","uye"],
   watch: {
     /*tab() {
       if (this.tab === "eksikler") {
