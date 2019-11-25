@@ -58,4 +58,14 @@ class ajax extends AAjax {
         return $data->uyenin_sinavlari($uye_id);
     }
 
+    public function seviye($uye_id,$tarih,$tanim,$detaylar,$seviye_id = false) {
+        $data = new Data();
+        return $data->seviye($uye_id,$tarih,$tanim,$detaylar,$seviye_id);
+    }
+
+    public function sinav_sil($seviye_id) {        
+        $data = new Data();
+        return $data->sinav_sil($seviye_id);
+    }
+
 }

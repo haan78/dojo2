@@ -1,0 +1,110 @@
+[25-Nov-2019 09:45:41 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:45:42 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:45:42 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:45:42 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:45:42 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:45:43 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:45:43 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:46:54 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:48:18 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2011-02-02', '5 KYU', 'kgo\xC4\xB1yguoygo', NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63
+[25-Nov-2019 09:48:43 Europe/Istanbul] PHP Fatal error:  Uncaught Error: Call to undefined method Data::sevie() in D:\code\dojo2\dist\back-end\ajax.php:63
+Stack trace:
+#0 [internal function]: ajax->seviye('124', '2016-06-08', '2 KYU', NULL, NULL, false)
+#1 D:\code\dojo2\dist\back-end\lib\WebMethod.php(144): ReflectionMethod->invokeArgs(Object(ajax), Array)
+#2 D:\code\dojo2\dist\back-end\lib\WebMethod.php(53): WebMethod\WebMethod->runMethod('seviye', Array, NULL, NULL)
+#3 D:\code\dojo2\dist\back-end\router.php(97): WebMethod\WebMethod->__construct()
+#4 [internal function]: router->ajax()
+#5 D:\code\dojo2\dist\back-end\lib\WebRouter.php(12): ReflectionMethod->invokeArgs(Object(router), Array)
+#6 D:\code\dojo2\dist\index.php(2): WebRouter->__construct('ajax')
+#7 {main}
+  thrown in D:\code\dojo2\dist\back-end\ajax.php on line 63

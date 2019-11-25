@@ -385,13 +385,12 @@ FROM seviye GROUP BY uye_id HAVING tarih = MAX(tarih) ) s ON s.uye_id = u.uye_id
         return $this->conn->resultToArray($stmt->execute());
     }
 
-    public function seviye($uye_id,$tarih,$tanim,$detaylar,$ekc_no,$seviye_id = false) {
+    public function seviye($uye_id,$tarih,$tanim,$detaylar,$seviye_id = false) {
         $row = [
             "uye_id" => $uye_id,
             "tarih" => $tarih,
             "tanim" => $tanim,
-            "detaylar" =>$detaylar,
-            "ekc_no" => $ekc_no
+            "detaylar" =>$detaylar           
         ];
         if ($seviye_id!=false) $row["seviye_id"] = $seviye_id;
         return $this->conn->table("seviye", $row);

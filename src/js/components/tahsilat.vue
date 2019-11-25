@@ -50,7 +50,7 @@
       </el-tab-pane>
     </el-tabs>
     <el-dialog :title="uye" :visible.sync="dialogVisible" v-loading="loading" width="80%">
-      <el-form :model="odeme" label-width="5em" size="mini" :rules="r_odeme" ref="FORM">
+      <el-form :model="odeme" size="mini" :rules="r_odeme" ref="FORM" label-width="auto" label-position="top">
         <el-form-item label="Türü" prop="odeme_tur_id">
           <el-select v-model="odeme.odeme_tur_id" placeholder="Türü" @change="turSelect">
             <el-option

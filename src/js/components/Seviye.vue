@@ -13,9 +13,9 @@
       </el-table-column>
     </el-table>
     <el-button type="success" @click="open({})">Sınav Ekle</el-button>
-    <el-dialog :title="uye" :visible.sync="dialogVisible" v-loading="loading" width="80%">
-      <el-form :model="seviye">
-        <el-form-item label="Sınav Tarihi">
+    <el-dialog :title="uye" :visible.sync="dialogVisible" v-loading="loading" custom-class="dialog" >
+      <el-form :model="seviye" label-width="auto" label-position="top" :rules="rules" ref="FORM">
+        <el-form-item label="Sınav Tarihi" prop="tarih" >
           <el-date-picker
             v-model="seviye.tarih"
             :picker-options="{firstDayOfWeek:1}"
@@ -25,7 +25,7 @@
             placeholder="Tahsilat Tarihi"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="Kazanılan Seviye">
+        <el-form-item label="Kazanılan Seviye" prop="tanim">
           <el-select v-model="seviye.tanim">
             <el-option value="6 KYU">6 KYU</el-option>
             <el-option value="5 KYU">5 KYU</el-option>
@@ -56,15 +56,38 @@
             style="width:100%"
             icon="el-icon-success"
             @click="save()"
-          >Tahsilat</el-button>
+          >Kaydet</el-button>
         </div>
       </div>
     </el-dialog>
   </div>
 </template>
+<style>
+  .dialog {
+    width:80%;
+    max-width:400px;
+  }
+</style>
 <script>
 export default {
   data() {
+
+    var val_tarih = (rule, value, callback) => {
+      if (value === null || value === "") {
+        callback(new Error("Lütfen sınav tarihini seçin"));
+      } else {
+        callback();
+      }
+    };
+
+    var val_tanim = (rule, value, callback) => {
+      if (value === null || value === "") {
+        callback(new Error("Lütfen bir seviye seçin"));
+      } else {
+        callback();
+      }
+    };
+
     return {
       loading: false,
       dialogVisible: false,
@@ -73,6 +96,16 @@ export default {
         tarih: null,
         tanim: null,
         detaylar: null
+      },
+      rules:{
+        tarih:{
+          trigger: "blur",
+          validator: val_tarih
+        },
+        tanim:{
+          trigger: "blur",
+          validator: val_tanim
+        }
       },
       list: []
     };
@@ -99,8 +132,35 @@ export default {
         }
       }
     },
-    save() {},
-    del() {}
+    save() {
+      let self = this;
+      self.$refs.FORM.validate(valid=>{
+        if (valid) {
+          self.WebMethod("seviye",[self.uye_id, self.seviye.tarih,self.seviye.tanim,self.seviye.detaylar,self.seviye.seviye_id],response=>{
+            self.dialogVisible = false;
+            self.load();
+          });
+        }
+      });
+    },
+    del() {
+      let self = this;
+      if ( self.seviye.seviye_id !== null ) {
+        this.$confirm("Bu kaydı silmek istediğinizden emin misiniz?", "Uyarı", {
+          confirmButtonText: "Evet",
+          cancelButtonText: "Hayır",
+          type: "warning",
+          customClass:"confirm-box"
+        })
+          .then(() => {
+            self.WebMethod("sinav_sil", [self.seviye.seviye_id], response => {
+              self.dialogVisible = false;
+              self.load();
+            });
+          })
+          .catch(() => {});
+      }
+    }
   }
 };
 </script>
