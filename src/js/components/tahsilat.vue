@@ -17,7 +17,7 @@
           </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane label="Yapılmış Özdemeler" name="odemeler">
+      <el-tab-pane label="Ödemeler" name="odemeler">
         <el-table :data="odemeler">
           <el-table-column label="Tarih">
             <template slot-scope="scope">{{ $date.toTurkish(scope.row.tarih) }}</template>

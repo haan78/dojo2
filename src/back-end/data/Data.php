@@ -165,7 +165,7 @@ class Data {
     }
 
     public function kullanicilar() {
-        $sql = "SELECT kullanici_id,kullanici,NULL AS pass,yetki FROM kullanici ORDER BY LOCALE(kullanici,'tr_TR') ASC LIMIT 100";
+        $sql = "SELECT kullanici_id,kullanici,yetki FROM kullanici ORDER BY LOCALE(kullanici,'tr_TR') ASC LIMIT 100";
         $stmt = $this->conn->prepare($sql);
         return $this->conn->resultToArray($stmt->execute());
     }

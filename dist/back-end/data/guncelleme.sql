@@ -15,3 +15,27 @@ insert into seviye ( seviye_id,uye_id,tarih,tanim,detaylar )
 	select s_.seviye_id,s_.uye_id,s_.tarih,s_.tanim,s_.detaylar from seviye_ s_;
 
 DROP TABLE seviye_;
+
+CREATE TABLE `gider_tur` (
+	`gider_tur_id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`gider_tur`	TEXT NOT NULL UNIQUE
+);
+
+DROP TABLE gider;
+
+CREATE TABLE `gider` (
+	`gider_id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+	`tarih`	TEXT,
+	`tutar`	NUMERIC ( 12 , 2 ),
+	`aciklama`	TEXT,
+	`gider_tur_id`	INTEGER NOT NULL,
+	`uye_id` INTEGER
+);
+
+INSERT INTO gider_tur (gider_tur_id,gider_tur) VALUES 
+	(1,'Salona Kirası'),
+	(2,'Takım Harcamalar'),
+	(3,'Organizasyon Harcamaları'),
+	(4,'Ekipman Temini'),
+	(5,'Ödeme İade'),
+	(6,'Diğer Harcamalar');

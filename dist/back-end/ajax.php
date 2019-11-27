@@ -58,14 +58,44 @@ class ajax extends AAjax {
         return $data->uyenin_sinavlari($uye_id);
     }
 
-    public function seviye($uye_id,$tarih,$tanim,$detaylar,$seviye_id = false) {
+    public function seviye($uye_id,$tarih,$tanim,$detaylar,$seviye_id = false) { //USER
         $data = new Data();
         return $data->seviye($uye_id,$tarih,$tanim,$detaylar,$seviye_id);
     }
 
-    public function sinav_sil($seviye_id) {        
+    public function sinav_sil($seviye_id) { //USER
         $data = new Data();
         return $data->sinav_sil($seviye_id);
+    }
+
+    public function uyenin_yoklamalari($uye_id,$s,$l,&$maxrow) {
+        $data = new Data();
+        return $data->uyenin_yoklamalari($uye_id,$s,$l,$maxrow);
+    }
+
+    public function uye_yoklama_ekle($uye_id,$tarih) { //USER
+        $data = new Data();
+        return $data->uye_yoklama_ekle($uye_id,$tarih);
+    }
+
+    public function uye_yoklama_sil($yoklama_id) { //USER
+        $data = new Data();
+        return $data->uye_yoklama_sil($yoklama_id);
+    }
+
+    public function kullanicilar() {
+        $data = new Data();
+        return $data->kullanicilar();
+    }
+
+    public function kullanici($kullanici,$yetki,$pass = null,$kullanici_id = false) {
+        $data = new Data();
+        return $data->kullanici($kullanici,$yetki,$pass,$kullanici_id);
+    }
+
+    public function kullanici_sil($kullanici_id) {
+        $data = new Data();
+        return $data->kullanici_sil($kullanici_id);
     }
 
 }

@@ -1,5 +1,5 @@
 import Pass from '../components/password.vue';
-import Uyeler from '../components/uyeler.vue';
+import Uyeler from '../components/Uyeler.vue';
 import Gider from '../components/gider.vue';
 import Tahsilat from '../components/Tahsilat.vue';
 import UyeKayit from '../components/UyeKayit.vue';
