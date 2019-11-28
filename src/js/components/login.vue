@@ -1,7 +1,11 @@
 <template>
   <div class="div_center">
     <div class="div_inner">
-      <h1 class="title is-large">Ankara Kendo Admin Panel</h1>
+      <div>
+        <img src="/assets/img/logo.png" style="vertical-align:middle;" />
+        <span class="title">Ankara Kendo Admin</span>
+      </div>
+      
       <el-form
         @submit="postForm('login')"
         :model="f_login"
@@ -31,13 +35,25 @@
 <style>
 html {
   height: 100%;
-  background-color: rgb(34, 88, 48);
+}
+
+.title {
+  font-weight: bolder;
+  font-size: larger;
+}
+
+body {
+  background: url(/assets/img/bg1.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .div_center {
-  background-color :rgb(193, 233, 187);
+  background-color : bisque;
   width: 20em;
-  height: 25em;
+  height: 21em;
 
   position: absolute;
   top: -10em;

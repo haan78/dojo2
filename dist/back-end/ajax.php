@@ -88,14 +88,34 @@ class ajax extends AAjax {
         return $data->kullanicilar();
     }
 
-    public function kullanici($kullanici,$yetki,$pass = null,$kullanici_id = false) {
+    public function kullanici($kullanici,$yetki,$pass = null,$kullanici_id = false) { //ADMIN
         $data = new Data();
         return $data->kullanici($kullanici,$yetki,$pass,$kullanici_id);
     }
 
-    public function kullanici_sil($kullanici_id) {
+    public function kullanici_sil($kullanici_id) { //ADMIN
         $data = new Data();
         return $data->kullanici_sil($kullanici_id);
+    }
+
+    public function yoklamalar($tarih_s,$tarih_e,$s,$l,&$maxrow) {
+        $data = new Data();
+        return $data->yoklamalar($tarih_s,$tarih_e,$s,$l,$maxrow);
+    }
+
+    public function yoklamadaki_uyeler($tarih) {
+        $data = new Data();
+        return $data->yoklamadaki_uyeler($tarih);
+    }
+
+    public function yoklamaye_ekle($tarih,$uye_id) {
+        $data = new Data();
+        return $data->yoklamaye_ekle($tarih,$uye_id);
+    }
+
+    public function yoklamadan_sil($tarih,$uye_id) {
+        $data = new Data();
+        return $data->yoklamadan_sil($tarih,$uye_id);
     }
 
 }

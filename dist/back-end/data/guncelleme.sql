@@ -29,7 +29,8 @@ CREATE TABLE `gider` (
 	`tutar`	NUMERIC ( 12 , 2 ),
 	`aciklama`	TEXT,
 	`gider_tur_id`	INTEGER NOT NULL,
-	`uye_id` INTEGER
+	`uye_id` INTEGER,
+	`belge`	TEXT
 );
 
 INSERT INTO gider_tur (gider_tur_id,gider_tur) VALUES 
@@ -39,3 +40,5 @@ INSERT INTO gider_tur (gider_tur_id,gider_tur) VALUES
 	(4,'Ekipman Temini'),
 	(5,'Ödeme İade'),
 	(6,'Diğer Harcamalar');
+
+CREATE UNIQUE INDEX uni_yoklama ON yoklama(uye_id,tarih);

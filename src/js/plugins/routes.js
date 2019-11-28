@@ -6,7 +6,9 @@ import UyeKayit from '../components/UyeKayit.vue';
 import Seviye from '../components/Seviye.vue';
 import UyeYoklama from '../components/UyeYoklama.vue';
 import MaliDurum from '../components/MaliDurum.vue';
-import Yoklamalar from '../components/yoklamalar.vue';
+import Yoklamalar from '../components/Yoklamalar.vue';
+import Yoklama from '../components/Yoklama.vue';
+
 import Sabitler from '../components/Sabitler.vue';
 import Kullanicilar from '../components/Kullanicilar.vue';
 import Photo from '../components/Photo.vue';
@@ -22,6 +24,7 @@ export default [
     {path:"/photo/:uye_id/:photo/:uye", component:Photo, meta:{ title:"Üye Fotografı" },props:true },
     {path:"/malidurum", component:MaliDurum, meta:{ title:"Mali Durum" } },
     {path:"/yoklamalar", component:Yoklamalar, meta:{ title:"Yoklamalar" } },
+    {path:"/yoklama/:tarih", component:Yoklama, meta:{ title:"Yoklama"},props:true },
     {path:"/sabitler", component:Sabitler, meta:{ title:"Sabitler" } },
     {path:"/kullanicilar", component:Kullanicilar, meta:{ title:"Kullanıcılar" } }
 ];

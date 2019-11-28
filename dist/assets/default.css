@@ -36,3 +36,12 @@
 .confirm-box {
     width: auto;
 }
+
+.list {
+    max-width: 500px;
+}
+
+.list .item {
+    padding-bottom: 1em;
+    display: block;
+}

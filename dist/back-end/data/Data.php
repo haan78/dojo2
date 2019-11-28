@@ -53,32 +53,20 @@ class Data {
         }
     }
 
-    public function yoklama($tarih,$uye_ids,&$incount) {
+    public function yoklamaye_ekle($tarih,$uye_id) {
+        $stmt = $this->conn->prepare("INSERT INTO yoklama (uye_id,tarih) VALUES (:u,:t)");
+        $stmt->bindParam("t",$tarih, SQLITE3_TEXT);
+        $stmt->bindParam("u",$uye_id, SQLITE3_INTEGER);
+        $stmt->execute();
+        return true;
+    }
 
-        $this->conn("BEGIN");        
-        try {
-            
-        
-            $stmt = $this->conn->prepare("DELETE FROM yoklama WHERE tarih =:tarih");
-            $stmt->bindParam("tarih",$tarih, SQLITE3_TEXT);
-            $stmt->execute();
-        
-        
-            //var_dump($uye_ids);
-            for($i=0; $i<count($uye_ids); $i++) {
-                $stmt = $this->conn->prepare("INSERT INTO yoklama (uye_id,tarih) VALUES (:u,:t)");
-                $stmt->bindParam("t",$tarih, SQLITE3_TEXT);
-                $stmt->bindParam("u",$uye_ids[$i], SQLITE3_INTEGER);
-                $stmt->execute();
-            }
-
-            $incount = $i;
-        } catch ( Exception $ex ) {
-            $this->exec("ROLLBACK");
-            throw $ex;
-        }
-
-        $this->exec("COMMIT");
+    public function yoklamadan_sil($tarih,$uye_id) {
+        $stmt = $this->conn->prepare("DELETE FROM yoklama WHERE tarih = :t AND uye_id = :u");
+        $stmt->bindParam("t",$tarih, SQLITE3_TEXT);
+        $stmt->bindParam("u",$uye_id, SQLITE3_INTEGER);
+        $stmt->execute();
+        return true;
     }
 
     public function yoklamalar($tarih_s,$tarih_e,$s,$l,&$maxrow) {
@@ -98,19 +86,17 @@ class Data {
         return $p->result($maxrow);
     }
 
-    public function uye_yoklama_ekle($uye_id,$tarih) {        
-        return $this->conn->table("yoklama", [ "uye_id"=>$uye_id,"tarih"=>$tarih ]);
-    }
-
-    public function uye_yoklama_sil($yoklama_id) {        
-        return $this->conn->table("yoklama", $yoklama_id);
-    }
-
-    public function yuklamadaki_uyeler($tarih) {
-        $sql = "SELECT y.uye_id,u.uye FROM yoklama y INNER JOIN uye u ON u.uye_id = y.uye_id WHERE y.tarih = :t ORDER BY u.uye ASC LIMIT 100";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam("t",$tarih, SQLITE3_TEXT);
-        return $this->conn->resultToArray($stmt->execute());
+    public function yoklamadaki_uyeler($tarih) {        
+        $yoklamadaki_uyeler_stmt = $this->conn->prepare("SELECT y.yoklama_id,y.uye_id,u.uye,u.photo FROM yoklama y INNER JOIN uye u ON u.uye_id = y.uye_id WHERE y.tarih = :t ORDER BY u.uye ASC LIMIT 100");
+        $yoklamadaki_uyeler_stmt->bindParam("t",$tarih, SQLITE3_TEXT);
+        $yoklamadaki_uyeler = $this->conn->resultToArray($yoklamadaki_uyeler_stmt->execute());
+        $secilebilecek_uyeler_stmt = $this->conn->prepare("SELECT u.uye_id,u.uye,u.photo FROM uye u LEFT JOIN yoklama y ON u.uye_id = y.uye_id AND y.tarih = :t WHERE u.aktif = 1 AND y.uye_id IS NULL ORDER BY u.uye ASC LIMIT 100");
+        $secilebilecek_uyeler_stmt->bindParam("t",$tarih, SQLITE3_TEXT);
+        $secilebilecek_uyeler = $this->conn->resultToArray($secilebilecek_uyeler_stmt->execute());
+        return [
+            "aktifler"=>$secilebilecek_uyeler,
+            "gelenler"=>$yoklamadaki_uyeler
+        ];
     }
 
     public function aktif_uyeler() {
