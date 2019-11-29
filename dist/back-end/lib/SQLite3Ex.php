@@ -19,21 +19,36 @@ class SQLite3Paging {
     private $start = 0;
     private $limit = 10;
     private $conn = null;
+    private $fields = [];
+    public $values = [];
 
-    public function __construct( SQLite3 $conn ,$sql,$start = 0,$limit = 10)
+    public function __construct( SQLite3 $conn ,$sql,$start = 0,$limit = 10,$fields = [])
     {
         $this->sql = $sql;
         $this->start = $start;
         $this->limit = $limit;
         $this->conn = $conn;
+        $this->fields = $fields;
         $this->refresh();
     }
 
+    public function addField($name,$groupFnc) {
+        $this->fields[$name] = $groupFnc;
+    }
+
+    private function generateGroupSql() {
+        $sqlG = "SELECT COUNT(1) AS MAXROW";
+        foreach($this->fields as $field => $fnc) {
+            $sqlG.=",$fnc AS $field";
+        }
+        $sqlG.=" FROM (".$this->sql.") QPAGING";
+        return $sqlG;
+    }
+
     private function refresh() {
-        if ( is_null($this->stmtC) || is_null($this->stmtQ) ) {
-            $this->stmtC = $this->conn->prepare("SELECT COUNT(1) AS `MAXROW` FROM ($this->sql) QPAGING");
-            $this->stmtQ = $this->conn->prepare("SELECT * FROM ($this->sql) QPAGING LIMIT $this->start,$this->limit");            
-            
+        if ( is_null($this->stmtC) || is_null($this->stmtQ) ) {            
+            $this->stmtC = $this->conn->prepare($this->generateGroupSql());
+            $this->stmtQ = $this->conn->prepare("SELECT * FROM ($this->sql) QPAGING LIMIT $this->start,$this->limit");                        
         }
     }
 
@@ -64,7 +79,8 @@ class SQLite3Paging {
         } else {
             $this->stmtC->reset();
             $this->stmtQ->reset();
-        }                
+        }
+        $this->values = $ac;
         $numrow = $ac["MAXROW"];
         return $aq;
 

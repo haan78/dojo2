@@ -12,10 +12,10 @@ class router extends ARouter
 
     public function logout()
     {     
-        $this->logData["user"] = user::checkData();
+        $user = user::checkData();
         user::removeData();        
         $this->html("js/login.js","app",["RouterMessage"=>["section"=>"login","class"=>"success","text"=>"Bye Bye"]]);
-        return true;
+        return $user;
     }
 
     public function form_authenticate()
@@ -26,10 +26,10 @@ class router extends ARouter
         if (!is_null($ud)) {
             user::saveData($ud);
             header("Location: index.php");
-            return true;
+            return ["user_id"=>$user_id,"pass"=>$pass,"success"=>true];
         } else {            
             $this->html("js/login.js","app",["RouterMessage"=>["section"=>"login","class"=>"danger","text"=>"Username or password is wrong"]]);
-            return false;
+            return ["user_id"=>$user_id,"pass"=>$pass,"success"=>false];
         }
     }
 
@@ -76,7 +76,7 @@ class router extends ARouter
         $user = user::checkData();
         if (!is_null($user)) {            
             $this->html("js/application.js","app",["UserData"=>user::checkData()]);
-            return $user;
+            return ["user" =>$user];
         } else {            
             $this->login();
             return null;
@@ -84,8 +84,28 @@ class router extends ARouter
     }
 
     public function photo() {
-        require_once __DIR__ . "/photo.php";
-        Photo::save();
+        $user = user::checkData();
+        if (!is_null($user)) {
+            require_once __DIR__ . "/photo.php";
+            Photoa::setResizeValues();
+            $result = Photo::save("assets/photos");
+            echo $result;
+            return ["user" =>$user,"photo"=>$result];
+        } else {
+            return null;
+        }        
+    }
+
+    public function upload() {
+        $user = user::checkData();
+        if (!is_null($user)) {
+            require_once __DIR__ . "/photo.php";
+            $result = Photo::save("assets/uploads");
+            echo $result;
+            return ["user" =>$user,"file"=>$result];
+        } else {
+            return null;
+        }        
     }
 
     public function ajax()
@@ -94,14 +114,14 @@ class router extends ARouter
         $user = user::checkData();
         if (!is_null($user)) {
             require_once __DIR__ . "/ajax.php";
-            $ajax = new ajax();
+            $ajax = new ajax();            
+            $ajax->printAsJson();
             $data = $ajax->logData;
-            $ajax->printAsJsonAndExit();
-
+            $data["user"] = $user;
         } else {
             header('Content-Type: application/json;charset=utf-8;');
             echo json_encode(["success" => false, "text" => "LOGOUT"]);
-        }
+        }        
         return $data;
     }
 }

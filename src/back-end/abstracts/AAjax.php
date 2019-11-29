@@ -8,7 +8,9 @@ class AAjax extends \WebMethod\WebMethod {
         "error"=>null,
     ];
     protected function convertToArray($methodName, $methodParams, $methodResult, $methodOutParams, $methodDuration, $methodException): array {       
-        if (is_null($methodException) ) {
+        $this->logData["method"] = $methodName;
+        $this->logData["params"] = $methodParams;
+        if (is_null($methodException) ) {            
             $this->logData["response"] = [
                 "result"=>$methodResult,
                 "outs"=>$methodOutParams

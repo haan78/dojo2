@@ -19,8 +19,9 @@ class WebRouter {
         $duration = round(microtime(true) - $time_start, 5);
         $this->log([
             "timestamp" => $timestamp,
-            "router_error" => $router_error,
+            "action"=>$action,
             "details" => $details,
+            "router_error" => $router_error,
             "duration" => $duration
         ]);
     }

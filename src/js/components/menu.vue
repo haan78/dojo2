@@ -5,7 +5,15 @@
       <ul class="jm-collapse">
         <li><a @click="link('/')"><i class="el-icon-s-custom"></i>Üyeler</a></li>
         <li><a @click="link('/yoklamalar')"><i class="el-icon-collection"></i>Yoklamalar</a></li>
-        <li><a @click="link('/malidurum')"><i class="el-icon-money"></i>Mali İşlemler</a></li>
+        <li class="jm-dropdown">
+          <a href="javascript:;"><b><i class="el-icon-document"></i>Raporlamalar</b></a>
+          <ul>
+            <li><a><i class="el-icon-s-data"></i>Üye Listesi</a></li>
+            <li><a><i class="el-icon-s-data"></i>Gelir Dökümü</a></li>
+            <li><a><i class="el-icon-s-data"></i>Gider Dökümü</a></li>
+            <li><a><i class="el-icon-s-data"></i>Performans İstatistikleri</a></li>
+          </ul>
+        </li>
         <li class="jm-dropdown" v-if="$store.state.user.yetki === 'ADMIN'">
           <a href="javascript:;"><b><i class="el-icon-setting"></i>Yönetici</b></a>
           <ul>

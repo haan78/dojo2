@@ -118,4 +118,24 @@ class ajax extends AAjax {
         return $data->yoklamadan_sil($tarih,$uye_id);
     }
 
+    public function uye_harcamalari($uye_id,$s,$l,&$maxrow,&$total) {
+        $data = new Data();
+        return $data->uye_harcamalari($uye_id,$s,$l,$maxrow,$total);
+    }
+
+    public function harcama($tarih,$uye_id,$tutar,$gider_tur_id,$belge,$aciklama,$gider_id = false) {
+        $data = new Data();
+        return $data->harcama($tarih,$uye_id,$tutar,$gider_tur_id,$belge,$aciklama,$gider_id);
+    }
+
+    public function harcama_sil($gider_id) {
+        $data = new Data();
+        return $data->harcama_sil($gider_id);
+    }
+
+    public function gider_turleri() {
+        $data = new Data();
+        return $data->gider_turleri();
+    }
+
 }

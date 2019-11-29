@@ -1,13 +1,6 @@
 <template>
     <div class="container">
-        <div class="form-inline">
-            <div class="item">
-                <el-button type="primary" @click="link('/yoklamalar')" icon="el-icon-back">Yoklamalara Dön</el-button>                
-            </div>
-            <div>
-                <h2>{{ $date.toTurkish(tarih) }}</h2>
-            </div>
-        </div>
+        <el-button type="text" @click="link('/yoklamalar')" icon="el-icon-back">Yoklamalara Geri Dön ( {{ $date.toTurkish(tarih) }} )</el-button>                
         <el-tabs v-model="tab">
           <el-tab-pane :label="'Aktif Üyleler ('+aktifler.length+')'" name="aktifler">
               <div class="list">

@@ -393,4 +393,35 @@ FROM seviye GROUP BY uye_id HAVING tarih = MAX(tarih) ) s ON s.uye_id = u.uye_id
         return $this->conn->table("seviye", $seviye_id);
     }
 
+    public function uye_harcamalari($uye_id,$s,$l,&$maxrow,&$total) {
+        $sql = "select g.gider_id, g.tarih, g.tutar, g.aciklama, g.belge, gt.gider_tur, g.gider_tur_id,g.uye_id  from gider g inner join gider_tur gt on gt.gider_tur_id = g.gider_tur_id where g.uye_id = 101 ORDER BY g.tarih DESC";
+        $p = new SQLite3Paging( $this->conn,$sql,$s,$l,[ "TOTAL"=>"SUM(tutar)" ]);
+        $p->bindParam("uid",$uye_id, SQLITE3_INTEGER);
+        $result = $p->result($maxrow);
+        $total = $p->values["TOTAL"];
+        return $result;
+    }
+
+    public function harcama($tarih,$uye_id,$tutar,$gider_tur_id,$belge,$aciklama,$gider_id = false) {
+        $row = [
+            "uye_id" => $uye_id,
+            "tarih" => $tarih,
+            "tutar" => $tutar,
+            "gider_tur_id" =>$gider_tur_id,
+            "belge"=>$belge,
+            "aciklama"=>$aciklama,            
+        ];
+        if ($gider_id!=false) $row["gider_id"] = $gider_id;
+        return $this->conn->table("gider", $row);
+    }
+
+    public function harcama_sil($gider_id) {
+        return $this->conn->table("gider", $gider_id);
+    }
+
+    public function gider_turleri() {
+        $stmt = $this->conn->prepare("SELECT * FROM gider_tur");
+        return $this->conn->resultToArray($stmt->execute());        
+    }
+
 }

@@ -39,7 +39,7 @@
                     <tr><td><el-button :type="getButtonType('eksik',item.aidat_eksigi)" icon="el-icon-money" @click="link('/tahsilat/'+item.uye_id+'/'+item.uye)" >Aidatlar{{ item.aidat_eksigi > 0 ? ' ('+item.aidat_eksigi+')' : '' }}</el-button></td></tr>
                     <tr><td><el-button type="primary" icon="el-icon-sort-up" @click="link('/uyeseviye/'+item.uye_id+'/'+item.uye)" >Seviye( {{item.seviye}} )</el-button></td></tr>
                     <tr><td><el-button :type="getButtonType('keiko',item.son_geldigi_keiko)" icon="el-icon-finished" @click="link('/uyeyoklama/'+item.uye_id+'/'+item.uye)" >Keikolar( {{ $date.toTurkish(item.son_geldigi_keiko) }} )</el-button></td></tr>
-                    <tr><td><el-button type="info" icon="el-icon-s-data">İstatistikler</el-button></td></tr>                    
+                    <tr><td><el-button type="info" icon="el-icon-magic-stick" @click="link('/uyeharcamalari/'+item.uye_id+'/'+item.uye)">Harcamalar</el-button></td></tr>
                 </table>
         </div>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h2>{{ uye }}</h2>
-        <el-upload :action="'index.php?a=photo&uye_id='+uye_id" :limit="3" :file-list="fileList" :on-success="sonuc" list-type="picture">
+        <el-upload :action="'index.php?a=photo&uye_id='+uye_id" :limit="1" :file-list="fileList" :on-success="sonuc" list-type="picture">
           
           <el-image  v-if="photo_!== null" fit="fill" :src="'assets/photos/'+this.photo_" ></el-image>
           <el-button v-else type="primary" icon="el-icon-camera" >Fotograf Yükle</el-button>

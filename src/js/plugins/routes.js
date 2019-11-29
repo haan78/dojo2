@@ -8,6 +8,7 @@ import UyeYoklama from '../components/UyeYoklama.vue';
 import MaliDurum from '../components/MaliDurum.vue';
 import Yoklamalar from '../components/Yoklamalar.vue';
 import Yoklama from '../components/Yoklama.vue';
+import UyeHarcamalari from '../components/UyeHarcamalari.vue';
 
 import Sabitler from '../components/Sabitler.vue';
 import Kullanicilar from '../components/Kullanicilar.vue';
@@ -21,6 +22,7 @@ export default [
     {path:"/uyekayit/:uye_id", component:UyeKayit, meta:{ title:"Üye Kayıt" },props:true },
     {path:"/uyeseviye/:uye_id/:uye", component:Seviye, meta:{ title:"Üye Seviye" },props:true },
     {path:"/uyeyoklama/:uye_id/:uye", component:UyeYoklama, meta:{ title:"Üye Yoklama" },props:true },
+    {path:"/uyeharcamalari/:uye_id/:uye", component:UyeHarcamalari, meta:{ title:"Üye Harcamaları" },props:true },
     {path:"/photo/:uye_id/:photo/:uye", component:Photo, meta:{ title:"Üye Fotografı" },props:true },
     {path:"/malidurum", component:MaliDurum, meta:{ title:"Mali Durum" } },
     {path:"/yoklamalar", component:Yoklamalar, meta:{ title:"Yoklamalar" } },
