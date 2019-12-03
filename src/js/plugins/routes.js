@@ -1,6 +1,6 @@
 import Pass from '../components/password.vue';
 import Uyeler from '../components/Uyeler.vue';
-import Gider from '../components/gider.vue';
+import GelirGider from '../components/GelirGider.vue';
 import Tahsilat from '../components/Tahsilat.vue';
 import UyeKayit from '../components/UyeKayit.vue';
 import Seviye from '../components/Seviye.vue';
@@ -9,7 +9,7 @@ import MaliDurum from '../components/MaliDurum.vue';
 import Yoklamalar from '../components/Yoklamalar.vue';
 import Yoklama from '../components/Yoklama.vue';
 import UyeHarcamalari from '../components/UyeHarcamalari.vue';
-
+import GenelUyeRaporu from '../components/GenelUyeRaporu.vue';
 import Sabitler from '../components/Sabitler.vue';
 import Kullanicilar from '../components/Kullanicilar.vue';
 import Photo from '../components/Photo.vue';
@@ -17,7 +17,7 @@ import Photo from '../components/Photo.vue';
 export default [
     {path:"/", component:Uyeler, meta:{ title:"Üyeler" }  },
     {path:"/pass", component:Pass, meta:{ title:"Parola Değiştir" } },
-    {path:"/gider", component:Gider, meta:{ title:"Gider" } },
+    {path:"/gelirgider", component:GelirGider, meta:{ title:"Gelir Gider Dökümü" } },
     {path:"/tahsilat/:uye_id/:uye", component:Tahsilat, meta:{ title:"Tahsilat" },props: true },
     {path:"/uyekayit/:uye_id", component:UyeKayit, meta:{ title:"Üye Kayıt" },props:true },
     {path:"/uyeseviye/:uye_id/:uye", component:Seviye, meta:{ title:"Üye Seviye" },props:true },
@@ -28,5 +28,6 @@ export default [
     {path:"/yoklamalar", component:Yoklamalar, meta:{ title:"Yoklamalar" } },
     {path:"/yoklama/:tarih", component:Yoklama, meta:{ title:"Yoklama"},props:true },
     {path:"/sabitler", component:Sabitler, meta:{ title:"Sabitler" } },
-    {path:"/kullanicilar", component:Kullanicilar, meta:{ title:"Kullanıcılar" } }
+    {path:"/kullanicilar", component:Kullanicilar, meta:{ title:"Kullanıcılar" } },
+    {path:"/geneluyeraporu",component:GenelUyeRaporu,meta:{title:"Genel Üye raporu"} }
 ];

@@ -38,8 +38,12 @@ export default {
                 self.$parent.loading = value;
             }
         },
+        defaultError(type,message) {
+            this.$message.error(message);
+        },
         WebMethod(method,data,onSuccess,onError) {
             let self = this;
+            var err = ( onError ? onError : self.defaultError );
             self.setLoading(true);
             self.$http.post("index.php/"+method+"?a=ajax",(data ? data : null )).then( (response)=>{
                 self.$parent.sessionCountdown = self.$parent.sessionCountdownLimit;
@@ -52,18 +56,18 @@ export default {
                     } else {
                         if ( response.data.text === "LOGOUT" ) {
                             window.location.reload(true);
-                        } else if ( typeof onError === "function" ) {
-                            onError( "Application",response.data.text );
+                        } else if ( typeof err === "function" ) {
+                            err( "Application",response.data.text );
                         }
                     }
                 } else {
-                    onError( "Server",response.data );
+                    err( "Server",response.data );
                 }                
             }).catch((error)=>{
                 self.$parent.sessionCountdown = self.$parent.sessionCountdownLimit;
                 self.setLoading(false);
-                if ( typeof onError === "function" ) {
-                    onError( "Network",error );
+                if ( typeof err === "function" ) {
+                    err( "Network",error );
                 }
             });
         }

@@ -138,4 +138,19 @@ class ajax extends AAjax {
         return $data->gider_turleri();
     }
 
+    public function gelirler($baslangic, $bitis, $s, $l) {
+        $data = new Data();
+        return $data->gelirler($baslangic, $bitis, $s, $l);
+    }
+
+    public function giderler($baslangic, $bitis, $s, $l) {
+        $data = new Data();
+        return $data->giderler($baslangic, $bitis, $s, $l);
+    }
+
+    public function genel_uye_raporu() {
+        $data = new Data();
+        return $data->genel_uye_raporu();
+    }
+
 }

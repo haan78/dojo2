@@ -4,21 +4,21 @@
       <input type="checkbox" id="menu-btn" class="jm-menu-btn">
       <ul class="jm-collapse">
         <li><a @click="link('/')"><i class="el-icon-s-custom"></i>Üyeler</a></li>
-        <li><a @click="link('/yoklamalar')"><i class="el-icon-collection"></i>Yoklamalar</a></li>
+        <li><a @click="link('/yoklamalar')"><i class="el-icon-collection"></i>Yoklamalar</a></li>        
+
         <li class="jm-dropdown">
-          <a href="javascript:;"><b><i class="el-icon-document"></i>Raporlamalar</b></a>
+          <a href="javascript:;"><b><i class="el-icon-tickets"></i>Raporlar</b></a>
           <ul>
-            <li><a><i class="el-icon-s-data"></i>Üye Listesi</a></li>
-            <li><a><i class="el-icon-s-data"></i>Gelir Dökümü</a></li>
-            <li><a><i class="el-icon-s-data"></i>Gider Dökümü</a></li>
-            <li><a><i class="el-icon-s-data"></i>Performans İstatistikleri</a></li>
+            <li><a @click="link('/gelirgider')"><i class="el-icon-money" ></i>Gelir-Gider Dökümü</a></li>
+        <li><a @click="link('/geneluyeraporu')"><i class="el-icon-s-data" ></i>Genel Üye Raporu</a></li>
           </ul>
         </li>
+
         <li class="jm-dropdown" v-if="$store.state.user.yetki === 'ADMIN'">
           <a href="javascript:;"><b><i class="el-icon-setting"></i>Yönetici</b></a>
           <ul>
             <li><a @click="link('/sabitler')"><i class="el-icon-set-up"></i>Sabitler</a></li>
-            <li><a @click="link('/kullanicilar')"><i class="el-icon-user-solid"></i>Kullanıcılar</a></li>            
+            <li><a @click="link('/kullanicilar')"><i class="el-icon-user-solid"></i>Kullanıcılar</a></li>
           </ul>
         </li>
         <li><a @click="link('/pass')"><i class="el-icon-key"></i>Parola Değiştir</a></li>

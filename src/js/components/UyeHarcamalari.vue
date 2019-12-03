@@ -2,13 +2,13 @@
   <div class="container">
       <h2>{{ uye }}</h2>
       <el-table :data="list">        
-        <el-table-column label="Tarih" width="90">
+        <el-table-column label="Tarih" >
             <template slot-scope="scope">
               {{ $date.toTurkish(scope.row.tarih) }}
                 </template>
           </el-table-column>
-          <el-table-column label="Tutar" prop="tutar" width="55"></el-table-column>
-          <el-table-column label="Tutar" width="170">
+          <el-table-column label="Tutar" prop="tutar" ></el-table-column>
+          <el-table-column label="Tutar" >
             <template slot-scope="scope">
               <el-button size="small" type="primary" title="Kaydı züdeltmek için tıklayın" @click="open(scope.row)">{{  scope.row.gider_tur }}</el-button>
             </template>
@@ -27,9 +27,9 @@
           <el-button type="success" @click="open()" size="small">Yeni Harcama</el-button>
         </div>
       </div>
-      <el-dialog :title="uye" :visible.sync="dialogVisible" v-loading="loading" width="80%">
-        <el-form :model="gider" label-position="top" ref="FORM" :rules="rules">
-          <el-form-item label="Tarih">
+      <el-dialog :title="uye" :visible.sync="dialogVisible" v-loading="loading" width="100%">
+        <el-form :model="gider" label-position="top" ref="FORM" :rules="rules" size="mini" >
+          <el-form-item label="Tarih" prop="tarih">
             <el-date-picker
             v-model="gider.tarih"
             :picker-options="{firstDayOfWeek:1}"
@@ -40,12 +40,12 @@
           ></el-date-picker>
 
           </el-form-item>
-          <el-form-item label="Tür">
+          <el-form-item label="Tür" prop="gider_tur_id">
             <el-select v-model="gider.gider_tur_id" placeholder="">
               <el-option v-for="(g,i) in gider_turleri" :key="i" :label="g.gider_tur" :value="g.gider_tur_id" ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Tutar">
+          <el-form-item label="Tutar" prop="tutar">
             <el-input-number v-model="gider.tutar" :step="5" :precision="2"></el-input-number>
           </el-form-item>
           <el-form-item label="Açıklama">
@@ -60,6 +60,7 @@
         </el-form>
         <div class="form-inline">
           <div class="item" v-show="gider.gider_id!==null">
+            <!--Budan devam et-->
             <el-button type="danger" style="width:100%" icon="el-icon-delete" @click="del()">Sil</el-button>
           </div>
           <div class="item">
@@ -79,6 +80,32 @@
 <script>
 export default {
   data() {
+
+    var r_tarih = (rule, value, callback) => {
+      if (value === null || value === "") {
+        callback(new Error("Harcamanın yapıldığı tarihi girin"));
+      } else {
+        callback();
+      }
+    };
+
+    var r_gider_tur_id = (rule, value, callback) => {
+      if (value === null) {
+        callback(new Error("Bir gider türü seçin"));
+      } else {
+        callback();
+      }
+    };
+
+    var r_tutar = (rule, value, callback) => {
+      if (value === null) {
+        callback(new Error("Mantıklı bir rakam girin"));
+      } else {
+        callback();
+      }
+    };
+
+
     return {
       loading: false,
       dialogVisible: false,
@@ -95,7 +122,20 @@ export default {
         belge: null,
         gider_tur_id: null
       },
-      rules:{},
+      rules:{
+        tarih:{
+          trigger: "blur",
+          validator: r_tarih
+        },
+        gider_tur_id:{
+          trigger: "blur",
+          validator: r_gider_tur_id
+        },
+        tutar:{
+          trigger: "blur",
+          validator: r_tutar
+        }
+      },
       gider_turleri: [],
       fileList:[]
     };
@@ -134,8 +174,36 @@ export default {
         self.maxrow = response.outputs.maxrow;
       });
     },
-    save() {},
-    del() {},
+    save() {
+      let self = this;
+      self.$refs.FORM.validate(valid=>{
+        if (valid) {
+          //$tarih,$uye_id,$tutar,$gider_tur_id,$belge,$aciklama,$gider_id = false
+          self.WebMethod("harcama",[self.gider.tarih,self.uye_id,self.gider.tutar,self.gider.gider_tur_id,self.gider.belge,self.gider.aciklama,self.gider.gider_id],response=>{
+            self.dialogVisible = false;
+            self.load();
+          });
+        }
+      });
+    },
+    del() {
+      let self = this;
+      if ( self.gider.gider_id !==null ) {
+        this.$confirm("Bu kaydı silmek istediğinizden emin misiniz?", "Uyarı", {
+          confirmButtonText: "Evet",
+          cancelButtonText: "Hayır",
+          type: "warning",
+          customClass:"confirm-box"
+        })
+          .then(() => {
+            self.WebMethod("harcama_sil", [self.gider.gider_id], response => {
+              self.dialogVisible = false;
+              self.load();
+            });
+          })
+          .catch(() => {});
+      }
+    },
     open(row) {
       if (row) {
         for(var e in row) {
