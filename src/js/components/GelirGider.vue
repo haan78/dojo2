@@ -135,7 +135,7 @@ export default {
             });
         },
         belge(belge) {
-            console.log(belge);
+            window.open("uploads/docs/"+belge,"_blank");
         }
     }
 

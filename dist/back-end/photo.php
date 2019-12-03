@@ -36,7 +36,7 @@ class Photo {
         $up = new Upload();
         $up->addAllowedExtension("jpg");
         $up->addAllowedExtension("jpeg");
-        $p = $up->save('file', $folder, true); //"assets/photos"
+        $p = $up->save('file', $folder, true); //"uploads/photos"
         if ($p != FALSE) {
             $fn = "$folder/$p";
             if (self::resize($fn)) {

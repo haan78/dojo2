@@ -88,7 +88,7 @@ class router extends ARouter
         if (!is_null($user)) {
             require_once __DIR__ . "/photo.php";
             Photoa::setResizeValues();
-            $result = Photo::save("assets/photos");
+            $result = Photo::save("uploads/photos");
             echo $result;
             return ["user" =>$user,"photo"=>$result];
         } else {
@@ -100,7 +100,7 @@ class router extends ARouter
         $user = user::checkData();
         if (!is_null($user)) {
             require_once __DIR__ . "/photo.php";
-            $result = Photo::save("assets/uploads");
+            $result = Photo::save("uploads/docs");
             echo $result;
             return ["user" =>$user,"file"=>$result];
         } else {
