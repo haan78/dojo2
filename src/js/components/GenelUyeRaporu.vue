@@ -4,7 +4,7 @@
           <el-table-column label="" fixed="left">
             <template slot-scope="scope">
                 <div class="uye">
-                    <img :src="( scope.row.photo !== null ? 'assets/photos/'+scope.row.photo : 'assets/img/kendoka.jpg' )" /><br/>
+                    <img :src="( scope.row.photo !== null ? 'uploads/photos/'+scope.row.photo : 'assets/img/kendoka.jpg' )" /><br/>
                 {{ scope.row.uye }}
                 </div>
                 
@@ -57,7 +57,7 @@ export default {
     methods:{
         load() {
             let self = this;
-            self.WebMethod("gen1el_uye_raporu",[],response=>{
+            self.WebMethod("genel_uye_raporu",[],response=>{
                 self.list = response.result;
             });
         }

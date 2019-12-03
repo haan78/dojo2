@@ -12,7 +12,7 @@ class AUser
             session_start();
         }
 
-        return (  isset($_SESSION["DATA"]) && isset($_SESSION["APPID"]) && $_SESSION["APPID"] == Settings::ID ? json_decode($_SESSION["DATA"],true) : null );
+        return (  isset($_SESSION["DATA"]) && isset($_SESSION["APPID"]) && $_SESSION["APPID"] == SETTING_ID ? json_decode($_SESSION["DATA"],true) : null );
     }
 
     public static function saveData($data)
@@ -23,7 +23,7 @@ class AUser
         }
 
         $_SESSION["DATA"] = json_encode($data);
-        $_SESSION["APPID"] = Settings::ID;
+        $_SESSION["APPID"] = SETTING_ID;
     }
 
     public static function removeData()

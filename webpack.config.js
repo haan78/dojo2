@@ -63,6 +63,7 @@ module.exports = {
         new CopyPlugin([
             { from: './src/back-end', to: 'back-end' },
             { from: './src/assets', to: 'assets' },
+            { from: './uploads', to: 'uploads' },
             { from: './src/index.php', to: 'index.php' }
         ])
     ]

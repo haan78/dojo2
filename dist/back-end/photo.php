@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/lib/Upload.php";
-require_once __DIR__ . "/data/Data.php";
+require_once __DIR__ . "/data.php";
 
 class Photo {
 

@@ -33,7 +33,7 @@
         <div v-for="(item,index) in list" :key="index" class="gitem">
             <table  >
                     <tr>
-                        <td rowspan="5" ><img :src="( item.photo !== null ? 'assets/photos/'+item.photo : 'assets/img/kendoka.jpg' ) " @click="link('/photo/'+item.uye_id+'/'+item.photo+'/'+item.uye)" ></td>
+                        <td rowspan="5" ><img :src="( item.photo !== null ? 'uploads/photos/'+item.photo : 'assets/img/kendoka.jpg' ) " @click="link('/photo/'+item.uye_id+'/'+item.photo+'/'+item.uye)" ></td>
                         <td><el-button type="text" icon="el-icon-user-solid" @click="link('/uyekayit/'+item.uye_id)" >{{ item.uye }}</el-button></td>
                     </tr>
                     <tr><td><el-button :type="getButtonType('eksik',item.aidat_eksigi)" icon="el-icon-money" @click="link('/tahsilat/'+item.uye_id+'/'+item.uye)" >Aidatlar{{ item.aidat_eksigi > 0 ? ' ('+item.aidat_eksigi+')' : '' }}</el-button></td></tr>

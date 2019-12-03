@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/lib/Upload.php";
-require_once __DIR__ . "/data/Data.php";
+require_once __DIR__ . "/data.php";
 
 class Photo {
 
@@ -36,7 +36,7 @@ class Photo {
         $up = new Upload();
         $up->addAllowedExtension("jpg");
         $up->addAllowedExtension("jpeg");
-        $p = $up->save('file', $folder, true); //"assets/photos"
+        $p = $up->save('file', $folder, true); //"uploads/photos"
         if ($p != FALSE) {
             $fn = "$folder/$p";
             if (self::resize($fn)) {

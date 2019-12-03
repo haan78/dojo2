@@ -1,44 +1,58 @@
 <?php
 require_once  __DIR__ . '/abstracts/AAjax.php';
-require_once __DIR__ . "/data/Data.php";
+require_once __DIR__ . "/data.php";
 class ajax extends AAjax {
-    public function pass($old,$new) {
+
+    private $yetki = null;
+
+    public function __construct($yetki)
+    {        
+        $this->yetki = $yetki;
+        parent::__construct();
+    }
+
+    protected function methodAuthorization($method, $params): bool {             
+        require_once __DIR__ . "/methods.php";        
+        return ( isset($methods[$method]) && in_array($this->yetki,$methods[$method]) );
+    }
+
+    public function pass($old,$new) { //OBSERVER
         if (!User::setPassword($old,$new)) {
             throw new \WebMethod\WebMethodException(__METHOD__,"Password changing has been failed ");
         }
     }
 
-    public function uyeler($search,$aktif,$siralama,$s,$l,&$maxrow) {
+    public function uyeler($search,$aktif,$siralama,$s,$l,&$maxrow) { //OBSERVER
         $data = new Data();
         return $data->uyeler($search,$aktif,$siralama,$s,$l,$maxrow);
     }
 
-    public function uye_detay($uye_id) {
+    public function uye_detay($uye_id) { //OBSERVER
         $data = new Data();
         return $data->uye_detay($uye_id);
     }
 
-    public function uye($uye,$uye_tur,$dogum_tarihi,$uyelik_tarihi,$aktif,$cinsiyet,$eposta,$ekf_no,$uye_id = 0) { //Admin
+    public function uye($uye,$uye_tur,$dogum_tarihi,$uyelik_tarihi,$aktif,$cinsiyet,$eposta,$ekf_no,$uye_id = 0) { //USER,ADMIN
         $data = new Data();
         return $data->uye($uye,$uye_tur,$dogum_tarihi,$uyelik_tarihi,$aktif,$cinsiyet,$eposta,$ekf_no,$uye_id);
     }
 
-    public function odeme_turleri() { //Admin
+    public function odeme_turleri() { //OBSERVER
         $data = new Data();
         return $data->odeme_turleri();    
     }
 
-    public function odeme_tur($odeme_tur,$tutar,$odeme_tur_id = false) { //Admin
+    public function odeme_tur($odeme_tur,$tutar,$odeme_tur_id = false) { //USER,ADMIN
         $data = new Data();
         return $data->odeme_tur($odeme_tur,$tutar,$odeme_tur_id);
     }
 
-    public function aidat_eksigi($uye_id) {
+    public function aidat_eksigi($uye_id) { //OBSERVER
         $data = new Data();
         return $data->aidat_eksigi($uye_id);
     }
 
-    public function uye_odemeleri($uye_id,$odeme_tur_id,$s,$l,&$total,&$maxrow) {
+    public function uye_odemeleri($uye_id,$odeme_tur_id,$s,$l,&$total,&$maxrow) { //OBSERVER
         $data = new Data();
         return $data->uye_odemeleri($uye_id,$odeme_tur_id,$s,$l,$total,$maxrow);
     }
@@ -53,7 +67,7 @@ class ajax extends AAjax {
         return $data->odeme_sil($odeme_id);
     }
 
-    public function uyenin_sinavlari($uye_id) {
+    public function uyenin_sinavlari($uye_id) { //OBSERVER
         $data = new Data();
         return $data->uyenin_sinavlari($uye_id);
     }
@@ -68,7 +82,7 @@ class ajax extends AAjax {
         return $data->sinav_sil($seviye_id);
     }
 
-    public function uyenin_yoklamalari($uye_id,$s,$l,&$maxrow) {
+    public function uyenin_yoklamalari($uye_id,$s,$l,&$maxrow) { //OBSERVER
         $data = new Data();
         return $data->uyenin_yoklamalari($uye_id,$s,$l,$maxrow);
     }
@@ -83,7 +97,7 @@ class ajax extends AAjax {
         return $data->uye_yoklama_sil($yoklama_id);
     }
 
-    public function kullanicilar() {
+    public function kullanicilar() { //OBSERVER
         $data = new Data();
         return $data->kullanicilar();
     }
@@ -108,12 +122,12 @@ class ajax extends AAjax {
         return $data->yoklamadaki_uyeler($tarih);
     }
 
-    public function yoklamaye_ekle($tarih,$uye_id) {
+    public function yoklamaye_ekle($tarih,$uye_id) { //USER
         $data = new Data();
         return $data->yoklamaye_ekle($tarih,$uye_id);
     }
 
-    public function yoklamadan_sil($tarih,$uye_id) {
+    public function yoklamadan_sil($tarih,$uye_id) { //USER
         $data = new Data();
         return $data->yoklamadan_sil($tarih,$uye_id);
     }
@@ -123,12 +137,12 @@ class ajax extends AAjax {
         return $data->uye_harcamalari($uye_id,$s,$l,$maxrow,$total);
     }
 
-    public function harcama($tarih,$uye_id,$tutar,$gider_tur_id,$belge,$aciklama,$gider_id = false) {
+    public function harcama($tarih,$uye_id,$tutar,$gider_tur_id,$belge,$aciklama,$gider_id = false) { //USER
         $data = new Data();
         return $data->harcama($tarih,$uye_id,$tutar,$gider_tur_id,$belge,$aciklama,$gider_id);
     }
 
-    public function harcama_sil($gider_id) {
+    public function harcama_sil($gider_id) { //USER
         $data = new Data();
         return $data->harcama_sil($gider_id);
     }

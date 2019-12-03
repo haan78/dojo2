@@ -6,7 +6,7 @@ class ARouter extends WebRouter
 {
 
     protected function log(array $data) {
-        @file_put_contents(Settings::LOGFILE, json_encode($data) . PHP_EOL, FILE_APPEND);
+        @file_put_contents(SETTING_LOGFILE, json_encode($data) . PHP_EOL, FILE_APPEND);
     }
 
     protected final function html($jsFile, $container = "app", $windowData = null)
@@ -17,7 +17,7 @@ class ARouter extends WebRouter
         <head>
             <meta charset='utf-8'>
             <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-            <title><?php echo Settings::TITLE; ?></title>
+            <title><?php echo SETTING_TITLE; ?></title>
             <meta name='viewport' content='width=device-width, initial-scale=1'>
             <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" />
         </head>

@@ -112,16 +112,11 @@ class router extends ARouter
     {
         $data = null;
         $user = user::checkData();
-        if (!is_null($user)) {
-            require_once __DIR__ . "/ajax.php";
-            $ajax = new ajax();            
-            $ajax->printAsJson();
-            $data = $ajax->logData;
-            $data["user"] = $user;
-        } else {
-            header('Content-Type: application/json;charset=utf-8;');
-            echo json_encode(["success" => false, "text" => "LOGOUT"]);
-        }        
+        require_once __DIR__ . '/ajax.php';
+        $ajax = new ajax( ( is_null($user) ? 'NOBODY' : $user["yetki"] ) ); 
+        $ajax->printAsJson();
+        $data = $ajax->logData;
+        $data["user"] = $user;
         return $data;
     }
 }

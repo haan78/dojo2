@@ -1,13 +1,14 @@
 <?php
 
-require_once __DIR__ . "/../lib/SQLite3Ex.php";
+require_once __DIR__ . "/lib/SQLite3Ex.php";
+require_once __DIR__ . "/definitions/Settings.php";
 
 class Data
 {
     private $conn;
     public static function link(): SQLite3Ex
     {
-        $conn = new SQLite3Ex(__DIR__ . "/dojo.db");
+        $conn = new SQLite3Ex( SETTING_DBFILE );
         return $conn;
     }
 

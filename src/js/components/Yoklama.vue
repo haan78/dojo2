@@ -6,7 +6,7 @@
               <div class="list">
                   <div class="item" v-for="(item,index) in aktifler" :key="index" v-loading="loading" title="Yoklamaya eklemek için tıklayın">
                       <button :disabled="loading" class="aktifler" @click="add(item.uye_id)">
-                          <img :src="( item.photo !== null ? 'assets/photos/'+item.photo : 'assets/img/kendoka.jpg' )" />
+                          <img :src="( item.photo !== null ? 'uploads/photos/'+item.photo : 'assets/img/kendoka.jpg' )" />
                           <span>{{ item.uye }}</span>
                       </button>
                   </div>
@@ -16,7 +16,7 @@
               <div class="list">
                   <div class="item" v-for="(item,index) in gelenler" :key="index" v-loading="loading" title="Yoklamadan çıkarmak için tıklayın">
                       <button :disabled="loading" class="gelenler" @click="remove(item.uye_id)">
-                          <img :src="( item.photo !== null ? 'assets/photos/'+item.photo : 'assets/img/kendoka.jpg' )" />
+                          <img :src="( item.photo !== null ? 'uploads/photos/'+item.photo : 'assets/img/kendoka.jpg' )" />
                           <span>{{ item.uye }}</span>
                       </button>
                   </div>
