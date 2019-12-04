@@ -30,7 +30,7 @@ export default {
         sonuc(response, file, fileList) {
             var rl = response.split(" ");
             this.photo_ = rl[1];
-            self.$parent.sessionCountdown = self.$parent.sessionCountdownLimit;
+            this.$parent.sessionCountdown = this.$parent.sessionCountdownLimit;
         }
     }
 }

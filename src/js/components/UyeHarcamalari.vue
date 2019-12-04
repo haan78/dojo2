@@ -1,16 +1,16 @@
 <template>
   <div class="container">
       <h2>{{ uye }}</h2>
-      <el-table :data="list">        
+      <el-table :data="list" size="small">        
         <el-table-column label="Tarih" >
             <template slot-scope="scope">
-              {{ $date.toTurkish(scope.row.tarih) }}
+              {{ $date.toTurkish(scope.row.tarih) }}<br/>{{  scope.row.gider_tur }}
                 </template>
           </el-table-column>
           <el-table-column label="Tutar" prop="tutar" ></el-table-column>
           <el-table-column label="Tutar" >
             <template slot-scope="scope">
-              <el-button size="small" type="primary" title="Kaydı züdeltmek için tıklayın" @click="open(scope.row)">{{  scope.row.gider_tur }}</el-button>
+              <el-button size="small" type="primary" title="Kaydı züdeltmek için tıklayın" @click="open(scope.row)" icon="el-icon-edit"></el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -59,10 +59,14 @@
           </el-form-item>
         </el-form>
         <div class="form-inline">
+          <div class="item" v-show="gider.belge !== null">
+            <el-button type="info" icon="el-icon-picture" @click="belge(gider.belge)">Belge</el-button>
+          </div>
+
           <div class="item" v-show="gider.gider_id!==null">
             <!--Budan devam et-->
             <el-button type="danger" style="width:100%" icon="el-icon-delete" @click="del()">Sil</el-button>
-          </div>
+          </div>          
           <div class="item">
             <el-button
               type="success"
@@ -155,7 +159,7 @@ export default {
             var rl = response.split(" ");
             if ( rl[0]==="0" ) {
               this.gider.belge = rl[1];
-              self.$parent.sessionCountdown = self.$parent.sessionCountdownLimit;
+              this.$parent.sessionCountdown = this.$parent.sessionCountdownLimit;
             } else {
               this.$message.error("UPLOAD ERROR / "+response);
             }            
@@ -218,6 +222,9 @@ export default {
         }
       }
       this.dialogVisible = true;
+    },
+    belge(belge) {
+      window.open("uploads/docs/"+belge,"_blank");
     }
   }
 };

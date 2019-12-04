@@ -1,13 +1,15 @@
 <template>
     <div>
-        <el-table :data="list" stripe style="width: 100%; height:100%;">
+        <el-input v-model="search" placeholder="Arama" prefix-icon="el-icon-search">
+            <el-button slot="append" icon="el-icon-refresh" title="Boşalt" @click="refresh()"></el-button>
+        </el-input>
+        <el-table :data="uyeler" stripe style="width: 100%;" :height="height" >
           <el-table-column label="" fixed="left">
             <template slot-scope="scope">
                 <div class="uye">
                     <img :src="( scope.row.photo !== null ? 'uploads/photos/'+scope.row.photo : 'assets/img/kendoka.jpg' )" /><br/>
                 {{ scope.row.uye }}
                 </div>
-                
             </template>
           </el-table-column>
           <el-table-column label="Seviye" prop="seviye"></el-table-column>
@@ -47,6 +49,8 @@
 export default {
     data() {
         return {
+            search:null,
+            height:200,
             loading:false,
             list:[]
         }
@@ -54,7 +58,19 @@ export default {
     created() {
         this.load()
     },
+    computed:{
+        uyeler() {
+            let self = this;
+            return self.list.filter( item => {
+                var str = (self.search === null ? '' : self.search ).toLowerCase();
+                return item.uye.toLowerCase().includes(str);
+            } );
+        }
+    },
     methods:{
+        refresh() {
+            this.search = null;
+        },
         load() {
             let self = this;
             self.WebMethod("genel_uye_raporu",[],response=>{
