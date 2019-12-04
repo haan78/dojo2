@@ -5,7 +5,7 @@ import Tahsilat from '../components/Tahsilat.vue';
 import UyeKayit from '../components/UyeKayit.vue';
 import Seviye from '../components/Seviye.vue';
 import UyeYoklama from '../components/UyeYoklama.vue';
-import MaliDurum from '../components/MaliDurum.vue';
+import GenelDurum from '../components/GenelDurum.vue';
 import Yoklamalar from '../components/Yoklamalar.vue';
 import Yoklama from '../components/Yoklama.vue';
 import UyeHarcamalari from '../components/UyeHarcamalari.vue';
@@ -24,7 +24,7 @@ export default [
     {path:"/uyeyoklama/:uye_id/:uye", component:UyeYoklama, meta:{ title:"Üye Yoklama" },props:true },
     {path:"/uyeharcamalari/:uye_id/:uye", component:UyeHarcamalari, meta:{ title:"Üye Harcamaları" },props:true },
     {path:"/photo/:uye_id/:photo/:uye", component:Photo, meta:{ title:"Üye Fotografı" },props:true },
-    {path:"/malidurum", component:MaliDurum, meta:{ title:"Mali Durum" } },
+    {path:"/geneldurum", component:GenelDurum, meta:{ title:"Genel Durum" } },
     {path:"/yoklamalar", component:Yoklamalar, meta:{ title:"Yoklamalar" } },
     {path:"/yoklama/:tarih", component:Yoklama, meta:{ title:"Yoklama"},props:true },
     {path:"/sabitler", component:Sabitler, meta:{ title:"Sabitler" } },

@@ -10,7 +10,8 @@
           <a href="javascript:;"><b><i class="el-icon-tickets"></i>Raporlar</b></a>
           <ul>
             <li><a @click="link('/gelirgider')"><i class="el-icon-money" ></i>Gelir-Gider Dökümü</a></li>
-        <li><a @click="link('/geneluyeraporu')"><i class="el-icon-s-data" ></i>Genel Üye Raporu</a></li>
+            <li><a @click="link('/geneluyeraporu')"><i class="el-icon-s-data" ></i>Genel Üye Raporu</a></li>
+            <li><a @click="link('/geneldurum')"><i class="el-icon-s-data" ></i>Genel Durum</a></li>
           </ul>
         </li>
 

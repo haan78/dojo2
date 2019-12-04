@@ -21,7 +21,7 @@ $methods = [
     "kullanici_sil" => ["ADMIN"],
     "yoklamalar" => ["ADMIN", "USER", "OBSERVER"],
     "yoklamadaki_uyeler" => ["ADMIN", "USER", "OBSERVER"],
-    "yoklamaye_ekle" => ["ADMIN", "USER"],
+    "yoklamaya_ekle" => ["ADMIN", "USER"],
     "yoklamadan_sil" => ["ADMIN", "USER"],
     "uye_harcamalari" => ["ADMIN", "USER", "OBSERVER"],
     "harcama" => ["ADMIN", "USER"],
@@ -29,5 +29,6 @@ $methods = [
     "gider_turleri" => ["ADMIN", "USER", "OBSERVER"],
     "gelirler" => ["ADMIN", "USER", "OBSERVER"],
     "giderler" => ["ADMIN", "USER", "OBSERVER"],
-    "genel_uye_raporu" => ["ADMIN", "USER", "OBSERVER"]
+    "genel_uye_raporu" => ["ADMIN", "USER", "OBSERVER"],
+    "genel_durum" => ["ADMIN", "USER", "OBSERVER"]
 ];

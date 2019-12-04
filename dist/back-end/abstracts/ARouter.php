@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../lib/WebRouter.php';
-require_once __DIR__ . '/../definitions/Settings.php';
 
 class ARouter extends WebRouter
 {

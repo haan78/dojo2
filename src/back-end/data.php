@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . "/lib/SQLite3Ex.php";
-require_once __DIR__ . "/definitions/Settings.php";
 
 class Data
 {
@@ -59,7 +58,7 @@ class Data
         }
     }
 
-    public function yoklamaye_ekle($tarih, $uye_id)
+    public function yoklamaya_ekle($tarih, $uye_id)
     {
         $stmt = $this->conn->prepare("INSERT INTO yoklama (uye_id,tarih) VALUES (:u,:t)");
         $stmt->bindParam("t", $tarih, SQLITE3_TEXT);
@@ -73,6 +72,13 @@ class Data
         $stmt = $this->conn->prepare("DELETE FROM yoklama WHERE tarih = :t AND uye_id = :u");
         $stmt->bindParam("t", $tarih, SQLITE3_TEXT);
         $stmt->bindParam("u", $uye_id, SQLITE3_INTEGER);
+        $stmt->execute();
+        return true;
+    }
+
+    public function uye_yoklama_sil($yoklama_id) {
+        $stmt = $this->conn->prepare("DELETE FROM yoklama WHERE yoklama_id = :yid");        
+        $stmt->bindParam("yid", $yoklama_id, SQLITE3_INTEGER);
         $stmt->execute();
         return true;
     }
@@ -201,6 +207,7 @@ class Data
         $stmt->bindValue("kullanici", $kullanici, SQLITE3_TEXT);
         $stmt->bindValue("parola", hash('ripemd160', $pass), SQLITE3_TEXT);
         $arr = $this->conn->resultToArray($stmt->execute());
+
         //print_r($arr); die();
         if (is_array($arr) && count($arr) == 1) {
             return $arr[0]["yetki"];
@@ -550,5 +557,27 @@ order by g.tarih ASC";
 
         $stmt = $this->conn->prepare($sql);
         return $this->conn->resultToArray($stmt->execute());
+    }
+
+    public function genel_durum($baslangic,$bitis) {
+        $sqlGelirler = "select q.donem as donem,sum(q.tutar) as deger from (select strftime('%Y',o.tarih)||'-'||strftime('%m',o.tarih) as donem,o.tutar from odeme o ) q where (q.donem between :bas AND :bit ) group by q.donem";
+        $sqlGiderler = "select q.donem as donem,sum(q.tutar) as deger from (select strftime('%Y',g.tarih)||'-'||strftime('%m',g.tarih) as donem,g.tutar from gider g ) q where (q.donem between :bas AND :bit ) group by q.donem";
+        $sqlKatilim = "select q.donem as donem, printf('%.2f',cast( sum(q.sayi) as float )  / count(1)) as deger from( select strftime('%Y',y.tarih)||'-'||strftime('%m',y.tarih) as donem,count(1) as sayi from yoklama y group by y.tarih ) q where (q.donem between :bas AND :bit ) group by q.donem";
+        
+        $stmtGelirler = $this->conn->prepare($sqlGelirler);
+        $stmtGiderler = $this->conn->prepare($sqlGiderler);
+        $stmtKatilim = $this->conn->prepare($sqlKatilim);
+
+        $stmtGelirler->bindParam("bas", $baslangic, SQLITE3_TEXT);
+        $stmtGelirler->bindParam("bit", $bitis, SQLITE3_TEXT);
+        $stmtGiderler->bindParam("bas", $baslangic, SQLITE3_TEXT);
+        $stmtGiderler->bindParam("bit", $bitis, SQLITE3_TEXT);
+        $stmtKatilim->bindParam("bas", $baslangic, SQLITE3_TEXT);
+        $stmtKatilim->bindParam("bit", $bitis, SQLITE3_TEXT);
+        return [
+            "gelirler"=>$this->conn->resultToArray($stmtGelirler->execute()),
+            "giderler"=>$this->conn->resultToArray($stmtGiderler->execute()),
+            "katilim"=>$this->conn->resultToArray($stmtKatilim->execute())
+        ];
     }
 }

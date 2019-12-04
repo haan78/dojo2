@@ -82,7 +82,7 @@ export default {
         },
         add(uye_id) {
             let self = this;
-            self.WebMethod("yoklamaye_ekle",[self.tarih,uye_id],response=>{
+            self.WebMethod("yoklamaya_ekle",[self.tarih,uye_id],response=>{
                 self.load();
             });
         },

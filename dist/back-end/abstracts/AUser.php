@@ -1,7 +1,5 @@
 <?php
 
-require_once  __DIR__ . "/../definitions/Settings.php";
-
 class AUser
 {
     public static function checkData()

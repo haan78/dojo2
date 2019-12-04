@@ -87,11 +87,6 @@ class ajax extends AAjax {
         return $data->uyenin_yoklamalari($uye_id,$s,$l,$maxrow);
     }
 
-    public function uye_yoklama_ekle($uye_id,$tarih) { //USER
-        $data = new Data();
-        return $data->uye_yoklama_ekle($uye_id,$tarih);
-    }
-
     public function uye_yoklama_sil($yoklama_id) { //USER
         $data = new Data();
         return $data->uye_yoklama_sil($yoklama_id);
@@ -122,9 +117,9 @@ class ajax extends AAjax {
         return $data->yoklamadaki_uyeler($tarih);
     }
 
-    public function yoklamaye_ekle($tarih,$uye_id) { //USER
+    public function yoklamaya_ekle($tarih,$uye_id) { //USER
         $data = new Data();
-        return $data->yoklamaye_ekle($tarih,$uye_id);
+        return $data->yoklamaya_ekle($tarih,$uye_id);
     }
 
     public function yoklamadan_sil($tarih,$uye_id) { //USER
@@ -165,6 +160,11 @@ class ajax extends AAjax {
     public function genel_uye_raporu() {
         $data = new Data();
         return $data->genel_uye_raporu();
+    }
+
+    public function genel_durum($baslangic,$bitis) {
+        $data = new Data();
+        return $data->genel_durum($baslangic,$bitis);
     }
 
 }

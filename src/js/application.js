@@ -13,6 +13,7 @@ import store from './plugins/store'
 import VueRouter from 'vue-router'
 import routes from "./plugins/routes"
 
+
 Vue.use(ElementUI,{ locale });
 Vue.use(MyDateVue);
 Vue.use(IsStringVue);
@@ -20,6 +21,7 @@ Vue.use(Url);
 Vue.use(AxiosHttp);
 Vue.mixin(DefaultMixin);
 Vue.use(VueRouter);
+
 Vue.config.productionTip = false;
 
 var router = new VueRouter({ routes });
