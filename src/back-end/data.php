@@ -1,13 +1,14 @@
 <?php
 
-require_once __DIR__ . "/lib/SQLite3Ex.php";
+require_once __DIR__ . "/lib/SQLite3Tool/SQLite3Ex.php";
+require_once __DIR__ . "/lib/SQLite3Tool/SQLite3Paging.php";
 
 class Data
 {
     private $conn;
-    public static function link(): SQLite3Ex
+    public static function link(): SQLite3Tool\SQLite3Ex
     {
-        $conn = new SQLite3Ex( SETTING_DBFILE );
+        $conn = new \SQLite3Tool\SQLite3Ex( SETTING_DBFILE );
         return $conn;
     }
 
@@ -89,7 +90,7 @@ class Data
         $ts = ($tarih_s == "" ? null : $tarih_s);
         $te = ($tarih_e == "" ? null : $tarih_e);
 
-        $p = new SQLite3Paging($this->conn, "SELECT y.tarih,COUNT(1) AS sayi FROM yoklama y WHERE y.tarih BETWEEN COALESCE(:ts,y.tarih) AND COALESCE(:te,y.tarih) GROUP BY y.tarih ORDER BY y.tarih DESC", $s, $l);
+        $p = new \SQLite3Tool\SQLite3Paging($this->conn, "SELECT y.tarih,COUNT(1) AS sayi FROM yoklama y WHERE y.tarih BETWEEN COALESCE(:ts,y.tarih) AND COALESCE(:te,y.tarih) GROUP BY y.tarih ORDER BY y.tarih DESC", $s, $l);
         $p->bindParam("ts", $ts, SQLITE3_TEXT);
         $p->bindParam("te", $te, SQLITE3_TEXT);
         return $p->result($maxrow);
@@ -97,7 +98,7 @@ class Data
 
     public function uyenin_yoklamalari($uye_id, $s, $l, &$maxrow)
     {
-        $p = new SQLite3Paging($this->conn, "SELECT y.tarih,y.yoklama_id FROM yoklama y WHERE y.uye_id = :uid ORDER BY y.tarih DESC", $s, $l);
+        $p = new \SQLite3Tool\SQLite3Paging($this->conn, "SELECT y.tarih,y.yoklama_id FROM yoklama y WHERE y.uye_id = :uid ORDER BY y.tarih DESC", $s, $l);
         $p->bindParam("uid", $uye_id, SQLITE3_INTEGER);
         return $p->result($maxrow);
     }
@@ -431,7 +432,7 @@ FROM seviye GROUP BY uye_id HAVING tarih = MAX(tarih) ) s ON s.uye_id = u.uye_id
     public function uye_harcamalari($uye_id, $s, $l, &$maxrow, &$total)
     {
         $sql = "select g.gider_id, g.tarih, g.tutar, g.aciklama, g.belge, gt.gider_tur, g.gider_tur_id,g.uye_id  from gider g inner join gider_tur gt on gt.gider_tur_id = g.gider_tur_id where g.uye_id = :uid ORDER BY g.tarih DESC";
-        $p = new SQLite3Paging($this->conn, $sql, $s, $l, ["TOTAL" => "SUM(tutar)"]);
+        $p = new \SQLite3Tool\SQLite3Paging($this->conn, $sql, $s, $l, ["TOTAL" => "SUM(tutar)"]);
         $p->bindParam("uid", $uye_id, SQLITE3_INTEGER);
         $result = $p->result($maxrow);
         $total = $p->values["TOTAL"];
@@ -480,7 +481,7 @@ FROM seviye GROUP BY uye_id HAVING tarih = MAX(tarih) ) s ON s.uye_id = u.uye_id
     where ( g.tarih between :bas AND :bit )
     order by g.tarih ASC";
 
-        $pgelir = new SQLite3Paging($this->conn, $sqlGelir, $s, $l, ["TOTAL" => "SUM(tutar)"]);        
+        $pgelir = new \SQLite3Tool\SQLite3Paging($this->conn, $sqlGelir, $s, $l, ["TOTAL" => "SUM(tutar)"]);        
         $pgelir->bindParam("bas", $baslangic, SQLITE3_TEXT);
         $pgelir->bindParam("bit", $bitis, SQLITE3_TEXT);
 
@@ -508,7 +509,7 @@ from gider g inner join uye u on u.uye_id = g.uye_id inner join gider_tur t on t
 where ( g.tarih between :bas AND :bit )
 order by g.tarih ASC";
 
-        $pgider = new SQLite3Paging($this->conn, $sqlGider, $s, $l, ["TOTAL" => "SUM(tutar)"]);
+        $pgider = new \SQLite3Tool\SQLite3Paging($this->conn, $sqlGider, $s, $l, ["TOTAL" => "SUM(tutar)"]);
         $pgider->bindParam("bas", $baslangic, SQLITE3_TEXT);
         $pgider->bindParam("bit", $bitis, SQLITE3_TEXT);
 

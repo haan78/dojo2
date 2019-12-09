@@ -22,6 +22,7 @@ class ARouter extends WebRouter
         </head>
 
         <body>
+            <div id="page_wait_div"><b><?php echo SETTING_PAGE_LOADING; ?></b></div>
             <div id="<?php echo $container ?>"></div>
             <script>
                 <?php
@@ -32,6 +33,7 @@ class ARouter extends WebRouter
                         }
                         echo file_get_contents($jsFile);
                         ?>
+                        document.getElementById("page_wait_div").style.display = "none";
             </script>            
         </body>
 

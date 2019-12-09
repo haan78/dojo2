@@ -3,12 +3,12 @@
     <div class="form-inline">            
       <div class="item">        
         <el-input v-model="search" placeholder="Üye adı" prefix-icon="el-icon-search" @change="load(true)"  >
-          <el-select v-model="aktif" placeholder="Üyelik Dururmu" slot="prepend" @change="load(true)" >
+          <el-select :loading="loading" v-model="aktif" placeholder="Üyelik Dururmu" slot="prepend" @change="load(true)" >
           <el-option :value="true" label="Aktifler" ></el-option>
           <el-option :value="false" label="Pasifler" ></el-option>
           <el-option :value="null" label="Hepsi" ></el-option>
-        </el-select>
-          <el-button slot="append" icon="el-icon-refresh" title="Boşalt" @click="refresh()"></el-button>
+        </el-select>        
+          <el-button slot="append" :loading="loading" icon="el-icon-search" title="Ara ve Boşalt" @click="load(true)"></el-button>
         </el-input>
         
       </div>
@@ -24,7 +24,7 @@
       </div>
 
       <div class="item">
-        <el-button @click="link('uyekayit/0')" icon="el-icon-circle-plus-outline" title="Yeni üye kaydı">Yeni Üye</el-button>
+        <el-button @click="link('uyekayit/0')" icon="el-icon-circle-plus-outline" title="Yeni üye kaydı">Yeni</el-button>
       </div>
 
     </div>
@@ -136,11 +136,7 @@ export default {
     }
   },
   watch:{
-    search() {
-      if ( this.search !== null  && this.search.length > 2 ) {
-        this.load(true);
-      }
-    }
+
   },
   methods: {
     load(reset) {
@@ -154,6 +150,7 @@ export default {
         response => {
           self.list = response.result;
           self.maxrow = response.outputs.maxrow;
+          self.search = null;
         }
       );
     },
@@ -181,10 +178,6 @@ export default {
           return "success";
         }
       }
-    },
-    refresh() {
-      this.search=null;
-      this.load(true);
     }
 
   }

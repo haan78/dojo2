@@ -9,6 +9,7 @@ if ( file_exists( "/var/data/dojo" ) ) {
 define("SETTING_LOGFILE",SETTING_DATA_PATH . "/dojo.log");
 define("SETTING_DBFILE",SETTING_DATA_PATH."/dojo.db");
 define("SETTING_TITLE","Ankara Kendo Kulübü Yönetim Paneli");
+define("SETTING_PAGE_LOADING","Yükleniyor Lütfen Bekleyin...");
 define("SETTING_ID","WEBPACK - ANKARA_KENDO");
 
 require_once __DIR__ . "/back-end/router.php";

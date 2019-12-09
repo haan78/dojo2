@@ -1,109 +1,62 @@
 <?php
+
 class Upload {
-	private $maximumSize;
-	private $forbiddenPatterns;
-	private $lastError;
-	private $allowedExts;
 
-	public function __construct() {
-		$this->maximumSize = 100 * 1024 * 1024;
-		$this->forbiddenPatterns = array("htaccess","\.php");
-		$this->lastError = false;
-		$this->allowedExts = array();
-	}
+    private $maximumSize;    
+    private $allowedExts;
 
-	public function getLastError() {
-		return $this->lastError;
-	}
+    public function __construct($exts = array('jpeg','jpg','png','gif','svg','pdf'),$maximumSize = (100 * 1024 * 1024) ) {
+        $this->maximumSize = $maximumSize;
+        $this->allowedExts = $exts;
+    }
 
-	public function noForbiddenPattern() {
-		$this->forbiddenPatterns = array();
-	}
+    public function addAllowedExtension(string $ext) {
+        array_push($this->allowedExts, strtolower($ext) );
+    }
 
-	public function addForbiddenPattern($reg) {
-		array_push($this->forbiddenPatterns,$reg);
-	}
+    private function isAllowed(string $ext) {
+        return in_array(strtolower($ext), $this->allowedExts);
+    }
 
-	public function addAllowedExtension($ext) {
-		if ( !is_string($ext) ) {
-			throw new Exception("Extension must be string");
-		}
-		array_push($this->allowedExts,$ext);
-	}
+    public function setMaximumSize($size) {
+        $this->maximumSize = intval($size);
+    }
 
-	public function loadAllowedExtensions($arr) {
-		$this->allowedExts = array();
-		for ($i=0; $i<count($arr); $i++ ) {
-			$this->addAllowedExtension($arr[$i]);
-		}
-	}
+    public function save(string $name, string $target, string &$ext) {
+        if (isset($_FILES[$name])) {
+            $target_info = pathinfo($target);
+            $source_info = pathinfo($_FILES[$name]['name']);
+            if ($this->isAllowed($source_info['extension'])) {
+                if ($_FILES[$name]["size"] <= $this->maximumSize) {
+                    if (file_exists($target_info['dirname'])) {
+                        if (is_writable($target_info['dirname'])) {                            
+                            if (!move_uploaded_file($_FILES[$name]['tmp_name'], $target.".".$source_info['extension'])) {
+                                throw new \Exception($_FILES[$name]["error"]);
+                            }
+                            $ext = $source_info['extension'];
+                        } else {
+                            throw new \Exception("Folder is not writable");
+                        }
+                    } else {
+                        throw new \Exception("Folder is not exist");
+                    }
+                } else {
+                    throw new \Exception("File is too big");
+                }
+            } else {
+                throw new \Exception("File extension is not allowed");
+            }
+        } else {
+            throw new \Exception("Upload name is not in files");
+        }
+    }
+    
+    public static function jpg($name,$folder) {
+        $up = new Upload(['jpg','jpeg']);
+        $file = uniqid();
+        $ext = "";
+        $up->save($name,"$folder/$file",$ext);
+        return "$file.$ext";
+    }
 
-	private function isAllowed($file) {
-		if ( count($this->allowedExts) > 0 ) {
-			for ( $i=0; $i<count($this->allowedExts); $i++ ) {
-				$info = pathinfo($file);
-				$ext = strtolower($info['extension']);
-				if ( $ext == strtolower($this->allowedExts[$i]) ) {                                    
-					return true;
-				}
-			}
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	private function isForbidden($file) {
-		for ($i=0; $i<count($this->forbiddenPatterns); $i++) {
-			$matches = null;
-			if (preg_match("/".$this->forbiddenPatterns[$i]."/si",$file,$matches)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-
-	public function setMaximumSize($size) {
-		$this->maximumSize = intval($size);
-	}
-
-	public function save($name,$folder,$guid = false) {
-		if ( isset( $_FILES[$name] ) ) {
-			if ( !$this->isForbidden( basename($_FILES[$name]['name']) ) ) {
-				if ( $this->isAllowed($_FILES[$name]['name']) ) {
-					if ( $_FILES[$name]["size"] <= $this->maximumSize ) {
-						if ( file_exists($folder) ) {
-							if ( is_writable($folder) ) {
-								$fn = basename($_FILES[$name]['name']);
-								if ( $guid !==false ) {
-									$info = pathinfo($_FILES[$name]['name']);
-									$fn = uniqid($guid).".".$info['extension'];
-								}
-								if (move_uploaded_file($_FILES[$name]['tmp_name'], $folder."/".$fn)) {
-									$this->lastError = false;
-									return $fn;
-								} else {
-									$this->lastError = "File could not save";
-								}
-							} else {
-								$this->lastError = "Folder is not writable";
-							}
-						} else {
-							$this->lastError = "Folder is not exist";
-						}
-					} else {
-						$this->lastError = "File is too big";
-					}
-				} else {
-					$this->lastError = "File extension is not allowed";
-				}
-			} else {
-				$this->lastError = "File pattern is forbidden";
-			}
-		} else {
-			$this->lastError = "Upload name is not in files";
-		}
-		return false;
-	}
 }

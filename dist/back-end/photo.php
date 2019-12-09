@@ -33,25 +33,18 @@ class Photo {
 
     public static function save($folder) {
         $uye_id = ( isset($_GET["uye_id"]) ? intval(  trim($_GET["uye_id"]) ) : 0 );
-        $up = new Upload();
-        $up->addAllowedExtension("jpg");
-        $up->addAllowedExtension("jpeg");
-        $p = $up->save('file', $folder, true); //"uploads/photos"
-        if ($p != FALSE) {
-            $fn = "$folder/$p";
-            if (self::resize($fn)) {
-                try {
-                    $data = new Data();
-                    $data->photo_save($uye_id,$p);
-                    return "0 ".$p;
-                } catch( Exception $ex ) {
-                    return "3";
-                }
+        try {
+            $file = Upload::jpg('file',$folder);
+            $fileName = "$folder/$file";
+            if ( self::resize($fileName) ) {
+                $data = new Data();
+                $data->photo_save($uye_id,$file);
+                return "success $file";
             } else {
-                return "2";
+                throw new Exception("Image could not be resized");
             }
-        } else {
-            return "1 ".$up->getLastError();
+        } catch(Exception $ex) {
+            return "error ".$ex->getMessage();
         }
     }
 }
