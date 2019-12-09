@@ -83,10 +83,10 @@
 
         <div class="item" v-show="gider.gider_id!==null">
           <!--Budan devam et-->
-          <el-button type="danger" style="width:100%" icon="el-icon-delete" @click="del()">Sil</el-button>
+          <el-button type="danger" style="width:100%" icon="el-icon-delete" :loading="loading" @click="del()">Sil</el-button>
         </div>
         <div class="item">
-          <el-button type="success" style="width:100%" icon="el-icon-success" @click="save()">Ver</el-button>
+          <el-button type="success" style="width:100%" icon="el-icon-success" :loading="loading" @click="save()">Ver</el-button>
         </div>
       </div>
     </el-dialog>
@@ -246,7 +246,11 @@ export default {
         this.gider.uye_id = this.uye_id;
       } else {
         for (var e in this.gider) {
-          this.gider[e] = null;
+          if ( e === "tarih" ) {
+            this.gider[e] = this.$date.toISO(new Date());
+          } else {
+            this.gider[e] = null;
+          }          
         }
       }
       this.dialogVisible = true;
