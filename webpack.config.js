@@ -62,8 +62,7 @@ module.exports = {
         new VueLoaderPlugin(),
         new CopyPlugin([
             { from: './src/back-end', to: 'back-end' },
-            { from: './src/assets', to: 'assets' },
-            { from: './uploads', to: 'uploads' },
+            { from: './src/assets', to: 'assets' },            
             { from: './src/index.php', to: 'index.php' }
         ])
     ]

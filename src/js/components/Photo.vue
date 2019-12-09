@@ -35,7 +35,7 @@ export default {
             this.$parent.sessionCountdown = this.$parent.sessionCountdownLimit;
         },
         getPhoto() {
-            var p = this.photo_ === null ? 'assets/img/kendoka.jpg' : 'uploads/photos/'+this.photo_;             
+            var p = this.photo_ === null ? 'assets/img/kendoka.jpg' : 'index.php?a=img_uye&file='+this.photo_;
             return p;
         }
     }

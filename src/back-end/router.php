@@ -88,24 +88,24 @@ class router extends ARouter
         if (!is_null($user)) {
             require_once __DIR__ . "/photo.php";
             Photo::setResizeValues();
-            $result = Photo::save("uploads/photos");
+            $result = Photo::save( SETTING_DATA_PATH . "/uploads/photos");
             echo $result;
             return ["user" =>$user,"photo"=>$result];
         } else {
             return null;
-        }        
+        }
     }
 
     public function upload() {
         $user = user::checkData();
         if (!is_null($user)) {
             require_once __DIR__ . "/photo.php";
-            $result = Photo::save("uploads/docs");
+            $result = Photo::save( SETTING_DATA_PATH . "/uploads/docs");
             echo $result;
             return ["user" =>$user,"file"=>$result];
         } else {
             return null;
-        }        
+        }
     }
 
     public function ajax()
@@ -118,5 +118,15 @@ class router extends ARouter
         $data = $ajax->logData;
         $data["user"] = $user;
         return $data;
+    }
+
+    public function img_uye() {
+        require_once __DIR__ . '/lib/Jpeg.php';
+        JPEG::show( SETTING_DATA_PATH . "/uploads/photos/".( isset($_GET["file"]) ? trim($_GET["file"]) : "empty.jpeg"  ) );
+    }
+
+    public function img_belge() {
+        require_once __DIR__ . '/lib/Jpeg.php';
+        JPEG::show( SETTING_DATA_PATH . "/uploads/docs/".( isset($_GET["file"]) ? trim($_GET["file"]) : "empty.jpeg"  ) );
     }
 }

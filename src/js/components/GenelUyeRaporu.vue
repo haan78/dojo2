@@ -9,7 +9,7 @@
         <template slot-scope="scope">
           <div class="uye">
             <img
-              :src="( scope.row.photo !== null ? 'uploads/photos/'+scope.row.photo : 'assets/img/kendoka.jpg' )"
+              :src="( scope.row.photo !== null ? 'index.php?a=img_uye&file='+scope.row.photo : 'assets/img/kendoka.jpg' )"
             />
             <br />
             {{ scope.row.uye }}

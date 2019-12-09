@@ -135,7 +135,7 @@ export default {
             });
         },
         belge(belge) {
-            window.open("uploads/docs/"+belge,"_blank");
+            window.open("index.php?a=img_belge&file="+belge,"_blank");
         }
     }
 
