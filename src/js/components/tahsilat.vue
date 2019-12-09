@@ -85,7 +85,7 @@
         </el-form-item>
         <div class="form-inline">
           <div class="item" v-show="odeme.odeme_id">
-            <el-button type="danger" style="width:100%" icon="el-icon-delete" @click="del()">Sil</el-button>
+            <el-button type="danger" style="width:100%" icon="el-icon-delete" @click="del()" :loading="loading">Sil</el-button>
           </div>
           <div class="item">
             <el-button
@@ -93,6 +93,7 @@
               style="width:100%"
               icon="el-icon-success"
               @click="save()"
+              :loading="loading"
             >Tahsilat</el-button>
           </div>
         </div>
@@ -281,6 +282,8 @@ export default {
             this.odeme.ay = new Date().getMonth() + 1;
           } else if (k === "yil") {
             this.odeme.yil = new Date().getFullYear();
+          }  else if (k === "tarih") {
+            this.odeme.tarih = this.$date.toISO(new Date());
           } else {
             this.odeme[k] = null;
           }
