@@ -583,14 +583,19 @@ order by g.tarih ASC";
     }
 
     public function gecikme_bildirimleri() {
-        $sqlUyeListesi = "select u.uye_id,u.uye,u.eposta from uye u where aktif = 1 and ( 
-            SELECT
-                count(1)
-                FROM yoklama y
-                LEFT JOIN odeme o ON o.uye_id = y.uye_id AND o.yil = CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AND o.ay = CAST( STRFTIME('%m',y.tarih) AS INTEGER) AND o.odeme_tur_id IN (1,2)
-                    WHERE y.uye_id = u.uye_id AND o.odeme_id IS NULL
-                        GROUP BY CAST( STRFTIME('%Y',y.tarih) AS INTEGER),CAST( STRFTIME('%m',y.tarih) AS INTEGER)
-                            HAVING CAST(STRFTIME('%m',date('now')) AS INTEGER) + ( CAST(STRFTIME('%Y',date('now')) AS INTEGER) * 12) > (CAST( STRFTIME('%Y',y.tarih) AS INTEGER)*12)+CAST( STRFTIME('%m',y.tarih) AS INTEGER) ) > 0";
+        $sqlUyeListesi = "select * from (
+            select u.uye_id,u.uye,u.eposta,
+            (SELECT COUNT(1) FROM (
+                                            SELECT 
+                        CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AS yil,
+                        CAST( STRFTIME('%m',y.tarih) AS INTEGER) AS ay
+                        FROM yoklama y 
+                        LEFT JOIN odeme o ON o.uye_id = y.uye_id AND o.yil = CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AND o.ay = CAST( STRFTIME('%m',y.tarih) AS INTEGER) AND o.odeme_tur_id IN (1,2)
+                            WHERE y.uye_id = u.uye_id AND o.odeme_id IS NULL
+                                GROUP BY CAST( STRFTIME('%Y',y.tarih) AS INTEGER),CAST( STRFTIME('%m',y.tarih) AS INTEGER)
+                                    HAVING CAST(STRFTIME('%m',date('now')) AS INTEGER) + ( CAST(STRFTIME('%Y',date('now')) AS INTEGER) * 12) > (CAST( STRFTIME('%Y',y.tarih) AS INTEGER)*12)+CAST( STRFTIME('%m',y.tarih) AS INTEGER)
+                                    ) q) AS aidat_eksigi
+            from uye u where aktif = 1 ) q2 WHERE q2.aidat_eksigi > 0 order by q2.aidat_eksigi desc";
         $sqlUyeEKsikler = "SELECT
             CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AS yil,
             CAST( STRFTIME('%m',y.tarih) AS INTEGER) AS ay,
