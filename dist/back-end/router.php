@@ -114,6 +114,7 @@ class router extends ARouter
         $user = user::checkData();
         require_once __DIR__ . '/ajax.php';
         $ajax = new ajax( ( is_null($user) ? 'NOBODY' : $user["yetki"] ) ); 
+        //sleep(10);
         $ajax->printAsJson();
         $data = $ajax->logData;
         $data["user"] = $user;

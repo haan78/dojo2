@@ -581,4 +581,48 @@ order by g.tarih ASC";
             "katilim"=>$this->conn->resultToArray($stmtKatilim->execute())
         ];
     }
+
+    public function gecikme_bildirimleri() {
+        $sqlUyeListesi = "select u.uye_id,u.uye,u.eposta from uye u where aktif = 1 and ( 
+            SELECT
+                count(1)
+                FROM yoklama y
+                LEFT JOIN odeme o ON o.uye_id = y.uye_id AND o.yil = CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AND o.ay = CAST( STRFTIME('%m',y.tarih) AS INTEGER) AND o.odeme_tur_id IN (1,2)
+                    WHERE y.uye_id = u.uye_id AND o.odeme_id IS NULL
+                        GROUP BY CAST( STRFTIME('%Y',y.tarih) AS INTEGER),CAST( STRFTIME('%m',y.tarih) AS INTEGER)
+                            HAVING CAST(STRFTIME('%m',date('now')) AS INTEGER) + ( CAST(STRFTIME('%Y',date('now')) AS INTEGER) * 12) > (CAST( STRFTIME('%Y',y.tarih) AS INTEGER)*12)+CAST( STRFTIME('%m',y.tarih) AS INTEGER) ) > 0";
+        $sqlUyeEKsikler = "SELECT
+            CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AS yil,
+            CAST( STRFTIME('%m',y.tarih) AS INTEGER) AS ay,
+            GROUP_CONCAT( STRFTIME('%d.%m.%Y',y.tarih),',' ) as gelinenler
+                FROM yoklama y
+                LEFT JOIN odeme o ON o.uye_id = y.uye_id AND o.yil = CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AND o.ay = CAST( STRFTIME('%m',y.tarih) AS INTEGER) AND o.odeme_tur_id IN (1,2)
+                    WHERE y.uye_id = :uid AND o.odeme_id IS NULL
+                        GROUP BY CAST( STRFTIME('%Y',y.tarih) AS INTEGER),CAST( STRFTIME('%m',y.tarih) AS INTEGER)
+                            HAVING CAST(STRFTIME('%m',date('now')) AS INTEGER) + ( CAST(STRFTIME('%Y',date('now')) AS INTEGER) * 12) > (CAST( STRFTIME('%Y',y.tarih) AS INTEGER)*12)+CAST( STRFTIME('%m',y.tarih) AS INTEGER)";
+        $sqlUyeAidatlari = "select o.yil,o.ay,STRFTIME('%d.%m.%Y',o.tarih) as tarih,ot.odeme_tur,o.tutar from odeme o inner join odeme_tur ot on ot.odeme_tur_id = o.odeme_tur_id where o.uye_id = :uid and o.odeme_tur_id in (1,2)";
+        $sqlBilgi = "select 
+        u.uye_tur,
+        CASE
+            WHEN u.uye_tur = 'TAM' THEN ( select tutar from odeme_tur where odeme_tur_id = 1 )
+            ELSE ( select tutar from odeme_tur where odeme_tur_id = 2 )
+        END as aidat
+    from uye u where u.uye_id = :uid";
+        $stmtUyeListesi = $this->conn->prepare($sqlUyeListesi);
+        $list = $this->conn->resultToArray($stmtUyeListesi->execute());
+        for ($i=0; $i<count($list); $i++ ) {            
+            $uid = $list[$i]["uye_id"];
+            $stmtUyeEKsikler = $this->conn->prepare($sqlUyeEKsikler);
+            $stmtUyeEKsikler->bindParam("uid", $uid, SQLITE3_INTEGER);
+            $list[$i]["eksikler"] = $this->conn->resultToArray($stmtUyeEKsikler->execute());
+            $stmtUyeAidatlari = $this->conn->prepare($sqlUyeAidatlari);
+            $stmtUyeAidatlari->bindParam("uid", $uid, SQLITE3_INTEGER);
+            $list[$i]["aidatlar"] = $this->conn->resultToArray($stmtUyeAidatlari->execute());
+            $stmtBilgi = $this->conn->prepare($sqlBilgi);
+            $stmtBilgi->bindParam("uid", $uid, SQLITE3_INTEGER);
+            $list[$i]["bilgi"] = $this->conn->resultToArray($stmtBilgi->execute());
+        }
+        return $list;
+    }
+
 }

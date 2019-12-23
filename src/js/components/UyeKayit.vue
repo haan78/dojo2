@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-form :model="form" :rules="rules" label-width="8em" size="mini" ref="FORM" >
+    <el-form :model="form" :rules="rules" label-width="8em" size="mini" ref="FORM" v-loading="loading" >
 
       <el-form-item label="Üye Adı" prop="uye">
         <el-input prefix-icon="el-icon-user" v-model="form.uye" placeholder="Üyenin tam adı"></el-input>
@@ -185,8 +185,10 @@ export default {
                     self.form.ekf_no,
                     self.form.uye_id
                     ],(response)=>{
+                      if ( self.form.uye_id === 0 && response.result.id > 0 ) {
                         self.form.uye_id = response.result.id;
-                        self.$message.success("Kayıt işlemi başarıyla gerçekleşti");
+                      }
+                      self.$message.success("Kayıt işlemi başarıyla gerçekleşti");
                 });
             }
         });

@@ -37,6 +37,9 @@ export default {
             if ( typeof self.$parent.loading === "boolean" ) {
                 self.$parent.loading = value;
             }
+            if ( typeof self.loading === "boolean" ) {
+                self.loading = value;
+            }
         },
         defaultError(type,message) {
             this.$message.error(message);
