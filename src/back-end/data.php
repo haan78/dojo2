@@ -583,10 +583,10 @@ order by g.tarih ASC";
     }
 
     public function gecikme_bildirimleri() {
-        $sqlUyeListesi = "select * from (
-            select u.uye_id,u.uye,u.eposta,
+        $sqlUyeListesi = "SELECT * FROM (
+            SELECT u.uye_id,u.uye,u.eposta,
             (SELECT COUNT(1) FROM (
-                                            SELECT 
+                    SELECT 
                         CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AS yil,
                         CAST( STRFTIME('%m',y.tarih) AS INTEGER) AS ay
                         FROM yoklama y 
@@ -605,14 +605,13 @@ order by g.tarih ASC";
                     WHERE y.uye_id = :uid AND o.odeme_id IS NULL
                         GROUP BY CAST( STRFTIME('%Y',y.tarih) AS INTEGER),CAST( STRFTIME('%m',y.tarih) AS INTEGER)
                             HAVING CAST(STRFTIME('%m',date('now')) AS INTEGER) + ( CAST(STRFTIME('%Y',date('now')) AS INTEGER) * 12) > (CAST( STRFTIME('%Y',y.tarih) AS INTEGER)*12)+CAST( STRFTIME('%m',y.tarih) AS INTEGER)";
-        $sqlUyeAidatlari = "select o.yil,o.ay,STRFTIME('%d.%m.%Y',o.tarih) as tarih,ot.odeme_tur,o.tutar from odeme o inner join odeme_tur ot on ot.odeme_tur_id = o.odeme_tur_id where o.uye_id = :uid and o.odeme_tur_id in (1,2)";
-        $sqlBilgi = "select 
-        u.uye_tur,
-        CASE
-            WHEN u.uye_tur = 'TAM' THEN ( select tutar from odeme_tur where odeme_tur_id = 1 )
-            ELSE ( select tutar from odeme_tur where odeme_tur_id = 2 )
-        END as aidat
-    from uye u where u.uye_id = :uid";
+        $sqlUyeAidatlari = "SELECT o.yil,o.ay,STRFTIME('%d.%m.%Y',o.tarih) as tarih,ot.odeme_tur,o.tutar from odeme o inner join odeme_tur ot on ot.odeme_tur_id = o.odeme_tur_id where o.uye_id = :uid and o.odeme_tur_id in (1,2) AND date('now','start of month','-1 year') ORDER BY o.yil DESC, o.ay DESC";
+        $sqlBilgi = "SELECT u.uye_tur,
+                    CASE
+                        WHEN u.uye_tur = 'TAM' THEN ( select tutar from odeme_tur where odeme_tur_id = 1 )
+                        ELSE ( select tutar from odeme_tur where odeme_tur_id = 2 )
+                    END as aidat
+                    from uye u where u.uye_id = :uid";
         $stmtUyeListesi = $this->conn->prepare($sqlUyeListesi);
         $list = $this->conn->resultToArray($stmtUyeListesi->execute());
         for ($i=0; $i<count($list); $i++ ) {            

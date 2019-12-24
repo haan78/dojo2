@@ -12,7 +12,7 @@ class Mail {
         $mail = new PHPMailer();
     
         $mail->IsSMTP();
-        $mail->SMTPDebug = 2;
+        $mail->SMTPDebug = 0;
         $mail->CharSet = "UTF-8";
     
         $mail->Host = "tls://smtp.gmail.com:587";
@@ -45,5 +45,11 @@ class Mail {
             $err = $mail->ErrorInfo;
             return false;
         }
+    }
+
+    public static function pasiflestir_devam_drurumu($uye) {
+        $title = "Üyelik Pasifleştime Bildirimi";
+        $body="Merhaba *uye*, umarız hayatında herşey yolundadır. Malesef bir süredir antrenmanlarına gelemiyorsun. Sen olmadan bir kişi eksiğiz.
+         ";
     }
 }
