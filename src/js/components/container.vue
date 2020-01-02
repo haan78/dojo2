@@ -4,8 +4,8 @@
     <Menu></Menu>
     <div style="padding-top:0.2em">
       <div style="display: flex; align-items:center">
-      <div style="display:inline-block;">
-        <img src="assets/img/logo.png" style="width:3em; heigth:3em;" >        
+      <div style="display:inline-block; cursor:pointer" title="Üyelere geri dön" @click="link('/')">
+        <img src="assets/img/logo.png" style="width:3em; heigth:3em;"  >        
       </div>
       <div style="display:inline-block; padding-left:1em; min-width:10em">
         <i class="el-icon-user"></i>{{ ($store.state.user != null ? $store.state.user.kullanici : "-" ) }}

@@ -629,4 +629,32 @@ order by g.tarih ASC";
         return $list;
     }
 
+    public function pasiflenmesi_gerekenler() {
+        $sql = "SELECT u.*,max(y.tarih) tarih,STRFTIME('%d.%m.%Y',max(y.tarih)) AS son_gelinen_antrenman_tarihi,
+        (SELECT COUNT(1) FROM (
+            SELECT 
+                CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AS yil,
+                CAST( STRFTIME('%m',y.tarih) AS INTEGER) AS ay
+                FROM yoklama y 
+                LEFT JOIN odeme o ON o.uye_id = y.uye_id AND o.yil = CAST( STRFTIME('%Y',y.tarih) AS INTEGER) AND o.ay = CAST( STRFTIME('%m',y.tarih) AS INTEGER) AND o.odeme_tur_id IN (1,2)
+                    WHERE y.uye_id = u.uye_id AND o.odeme_id IS NULL
+                        GROUP BY CAST( STRFTIME('%Y',y.tarih) AS INTEGER),CAST( STRFTIME('%m',y.tarih) AS INTEGER)
+                            HAVING CAST(STRFTIME('%m',date('now')) AS INTEGER) + ( CAST(STRFTIME('%Y',date('now')) AS INTEGER) * 12) > (CAST( STRFTIME('%Y',y.tarih) AS INTEGER)*12)+CAST( STRFTIME('%m',y.tarih) AS INTEGER)
+                            ) q) AS aidat_eksigi
+FROM yoklama y
+INNER JOIN uye u ON u.uye_id = y.uye_id AND u.aktif = 1
+GROUP BY y.uye_id HAVING date(max(y.tarih) ,'+3 month' )<date('now')
+ORDER BY tarih ASC";
+        $stmt = $this->conn->prepare($sql);
+        return  $this->conn->resultToArray($stmt->execute());
+    }
+
+    public function pasiflestir($uye_id) {
+        $sql = "UPDATE uye SET aktif = 0 WHERE uye_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam("id",$uye_id,SQLITE3_INTEGER);
+        $stmt->execute();
+        return true;
+    }
+
 }

@@ -46,10 +46,4 @@ class Mail {
             return false;
         }
     }
-
-    public static function pasiflestir_devam_drurumu($uye) {
-        $title = "Üyelik Pasifleştime Bildirimi";
-        $body="Merhaba *uye*, umarız hayatında herşey yolundadır. Malesef bir süredir antrenmanlarına gelemiyorsun. Sen olmadan bir kişi eksiğiz.
-         ";
-    }
 }

@@ -163,7 +163,7 @@ export default {
         } else {
           return "success";
         }
-      } else if ( 'keiko' ) {
+      } else if ( type == 'keiko' ) {
         if ( value === null ) {
           return "danger";
         }
