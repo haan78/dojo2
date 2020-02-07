@@ -130,4 +130,9 @@ class router extends ARouter
         require_once __DIR__ . '/lib/Jpeg.php';
         JPEG::show( SETTING_DATA_PATH . "/uploads/docs/".( isset($_GET["file"]) ? trim($_GET["file"]) : "empty.jpeg"  ) );
     }
+
+    public function genel_xlsx() {
+        require_once __DIR__ . "/ExcelOut.php";
+        ExcelOut::genel_uye_paroru();
+    }
 }

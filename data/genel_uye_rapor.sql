@@ -1,4 +1,4 @@
-select q.uye, q.seviye, q.cinsiyet,q.dogum_tarihi,q.ekf_no,q.uc_ayi_icinde_devam_sayisi,q.uc_aylik_devam_yuzdesi,q.ilk_keiko,q.son_keiko,q.photo
+select q.uye,q.eposta, q.seviye, q.cinsiyet,q.dogum_tarihi,q.ekf_no,q.uc_ayi_icinde_devam_sayisi,q.uc_aylik_devam_yuzdesi,q.ilk_keiko,q.son_keiko,q.photo
 
 ,(SELECT COUNT(1) FROM (
                         SELECT 
@@ -13,12 +13,12 @@ select q.uye, q.seviye, q.cinsiyet,q.dogum_tarihi,q.ekf_no,q.uc_ayi_icinde_devam
 
  from (
 select 
-uy.photo,uy.uye_id,uy.uye,uy.seviye_deger,uy.seviye,uy.ekf_no,uy.cinsiyet,'%'||printf('%.2f',( cast(count(1) as float) / 0.24 )) as uc_aylik_devam_yuzdesi,uy.dogum_tarihi,count(1) as uc_ayi_icinde_devam_sayisi,
+uy.photo,uy.eposta,uy.uye_id,uy.uye,uy.seviye_deger,uy.seviye,uy.ekf_no,uy.cinsiyet,'%'||printf('%.2f',( cast(count(1) as float) / 0.24 )) as uc_aylik_devam_yuzdesi,uy.dogum_tarihi,count(1) as uc_ayi_icinde_devam_sayisi,
 ( select min(yok.tarih) from yoklama yok where yok.uye_id = uy.uye_id ) as ilk_keiko,
 ( select max(yok.tarih) from yoklama yok where yok.uye_id = uy.uye_id ) as son_keiko
 from (
 SELECT 
-u.uye_id,u.uye,u.cinsiyet,u.dogum_tarihi,coalesce(s.tanim,'7 KYU') as seviye,u.ekf_no,u.photo
+u.uye_id,u.uye,u.eposta,u.cinsiyet,u.dogum_tarihi,coalesce(s.tanim,'7 KYU') as seviye,u.ekf_no,u.photo
 ,CASE WHEN INSTR(s.tanim,'DAN') THEN (cast(substr(s.tanim,1,instr(s.tanim,' ')-1) AS INTEGER) * 1)+(1/(1 + strftime('%J',s.tarih) / 10000000)) ELSE (cast(substr(s.tanim,1,instr(s.tanim,' ')-1) AS INTEGER)* -1)+(1/(1 + strftime('%J',s.tarih) / 10000000)) END as seviye_deger
 FROM "uye" u 
 left join "seviye" s on s.uye_id = u.uye_id
@@ -28,5 +28,3 @@ and u.aktif = 1 ) uy
 left join yoklama y  on uy.uye_id = y.uye_id and y.tarih >= date(date('now'),'-3 month')
 group by uy.uye_id,uy.uye,uy.seviye_deger,uy.cinsiyet
 ) q  order by q.seviye_deger desc
-
-	

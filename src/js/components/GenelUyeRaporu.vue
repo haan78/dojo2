@@ -4,6 +4,7 @@
     <el-input v-model="search" placeholder="Arama" prefix-icon="el-icon-search">
       <el-button slot="append" icon="el-icon-refresh" title="Boşalt" @click="refresh()"></el-button>
     </el-input>
+    <a href="index.php?a=genel_xlsx" >Excel Download</a>
     <el-table :data="uyeler" stripe style="width: 100%;" :height="height">
       <el-table-column label fixed="left">
         <template slot-scope="scope">
@@ -68,9 +69,6 @@ export default {
         height: 0
       }
     };
-  },
-  computed:{
-
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
