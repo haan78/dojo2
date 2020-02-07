@@ -568,8 +568,7 @@ order by g.tarih ASC";
         --strftime('%d/%m/%Y',q.ilk_keiko) AS ilk_keiko,
         --strftime('%d/%m/%Y',q.son_keiko) AS son_keiko,
         q.ilk_keiko AS ilk_keiko,
-        q.son_keiko AS son_keiko,
-        q.photo
+        q.son_keiko AS son_keiko
 
         ,(SELECT COUNT(1) FROM (
                                 SELECT 
