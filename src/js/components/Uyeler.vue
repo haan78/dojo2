@@ -141,6 +141,9 @@ export default {
   methods: {
     load(reset) {
       let self = this;
+      if (self.loading) {
+        return;
+      }
       if ( reset ) {
         self.page = 1;
       }
