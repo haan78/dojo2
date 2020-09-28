@@ -579,16 +579,16 @@ order by g.tarih ASC";
                 WHERE y.uye_id = q.uye_id AND o.odeme_id IS NULL
                     GROUP BY CAST( STRFTIME('%Y',y.tarih) AS INTEGER),CAST( STRFTIME('%m',y.tarih) AS INTEGER)
                         HAVING CAST(STRFTIME('%m',date('now')) AS INTEGER) + ( CAST(STRFTIME('%Y',date('now')) AS INTEGER) * 12) > (CAST( STRFTIME('%Y',y.tarih) AS INTEGER)*12)+CAST( STRFTIME('%m',y.tarih) AS INTEGER)
-                        ) q LIMIT 1) AS aidat_eksigi,q.uye_id
+                        ) q LIMIT 1) AS aidat_eksigi,q.uye_tur,q.uye_id
         
          from (
         select 
-        uy.photo,uy.eposta,uy.uye_id,uy.uye,uy.seviye_deger,uy.seviye,uy.ekf_no,uy.cinsiyet,'%'||printf('%.2f',( cast(count(1) as float) / 0.24 )) as uc_aylik_devam_yuzdesi,uy.dogum_tarihi,count(1) as uc_ayi_icinde_devam_sayisi,
+        uy.photo,uy.eposta,uy.uye_id,uy.uye_tur,uy.uye,uy.seviye_deger,uy.seviye,uy.ekf_no,uy.cinsiyet,'%'||printf('%.2f',( cast(count(1) as float) / 0.24 )) as uc_aylik_devam_yuzdesi,uy.dogum_tarihi,count(1) as uc_ayi_icinde_devam_sayisi,
         ( select min(yok.tarih) from yoklama yok where yok.uye_id = uy.uye_id ) as ilk_keiko,
         ( select max(yok.tarih) from yoklama yok where yok.uye_id = uy.uye_id ) as son_keiko
         from (
         SELECT 
-        u.uye_id,u.uye,u.eposta,u.cinsiyet,u.dogum_tarihi,coalesce(s.tanim,'7 KYU') as seviye,u.ekf_no,u.photo
+        u.uye_id,u.uye,u.eposta,u.uye_tur,u.cinsiyet,u.dogum_tarihi,coalesce(s.tanim,'7 KYU') as seviye,u.ekf_no,u.photo
         ,CASE WHEN INSTR(s.tanim,'DAN') THEN (cast(substr(s.tanim,1,instr(s.tanim,' ')-1) AS INTEGER) * 1)+(1/(1 + strftime('%J',s.tarih) / 10000000)) ELSE (cast(substr(s.tanim,1,instr(s.tanim,' ')-1) AS INTEGER)* -1)+(1/(1 + strftime('%J',s.tarih) / 10000000)) END as seviye_deger
         FROM uye u 
         left join seviye s on s.uye_id = u.uye_id

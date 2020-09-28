@@ -166,12 +166,12 @@ export default {
     }
   },
   methods: {
-    sonuc(response, file, fileList) {
+    sonuc(response) { //,file, fileList
       var rl = response.split(" ");
       if (rl[0] === "success") {
         this.gider.belge = rl[1];
       } else {
-        this.$message.error($rl[1] ? $rl[1] : "Blinmeyen hata");
+        this.$message.error(rl[1] ? rl[1] : "Blinmeyen hata");
       }
 
       this.$parent.sessionCountdown = this.$parent.sessionCountdownLimit;
@@ -210,7 +210,7 @@ export default {
               self.gider.aciklama,
               self.gider.gider_id
             ],
-            response => {
+            () => {
               self.dialogVisible = false;
               self.load();
             }

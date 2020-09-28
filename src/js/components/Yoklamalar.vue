@@ -1,8 +1,16 @@
 <template>
     <div class="container">
+        <el-date-picker
+            v-model="tarih"
+            :picker-options="{firstDayOfWeek:1}"
+            format="dd.MM.yyyy"
+            style="width:100%"
+            value-format="yyyy-MM-dd"
+            placeholder="Yeni Yoklama Tarihi"
+          ></el-date-picker>
         <div class="list" >
             <div class="item" >
-                <el-button :loading="loading" style="width:100%" type="success" icon="el-icon-plus" @click="link('/yoklama/'+$date.toISO( new Date() ) )" >Yeni Yooklama</el-button>
+                <el-button :loading="loading" style="width:100%" type="success" icon="el-icon-plus" @click="link('/yoklama/'+tarih )" >Yeni Yooklama</el-button>
             </div>
             <div v-for="(y,iy) in list" :key="iy" class="item" >
                 <el-button :loading="loading" style="width:100%" type="info" icon="el-icon-edit" @click="link('/yoklama/'+y.tarih)" >{{ $date.toTurkish(y.tarih) }}&nbsp;({{y.sayi}})</el-button>
@@ -17,6 +25,7 @@
 export default {
     data() {
         return {
+            tarih:this.$date.toISO( new Date() ),
             loading:false,
             page:1,
             limit:16,
